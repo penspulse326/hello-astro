@@ -1,5 +1,6 @@
 ---
-import "../styles/bootstrap.scss";
+import Navbar from '../components/navbar.astro';
+import '../styles/bootstrap.scss';
 ---
 
 <!doctype html>
@@ -13,6 +14,7 @@ import "../styles/bootstrap.scss";
     <meta name="description" content="Use Bootstrap with Astro" />
   </head>
   <body>
+    <Navbar />
     <slot />
     <script>
       // Import only what you need
@@ -29,7 +31,7 @@ import "../styles/bootstrap.scss";
       // import 'bootstrap/js/dist/toast';
       // import 'bootstrap/js/dist/tooltip';
       // Import everything
-      import "bootstrap/dist/js/bootstrap";
+      import 'bootstrap/dist/js/bootstrap';
     </script>
   </body>
 </html>
