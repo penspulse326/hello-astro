@@ -1,21 +1,62 @@
 ---
 import Navbar from '../components/navbar.astro';
 import '../styles/bootstrap.scss';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  canonicalUrl?: string;
+}
+
+const {
+  title = "Pen's Pulse - 技術筆記與開發心得",
+  description = '分享技術研究筆記、程式挑戰計畫與開發心得，記錄前端開發與技術學習的點點滴滴',
+  ogImage = '/og-image.png',
+  canonicalUrl = Astro.url.href,
+} = Astro.props;
+
+const siteTitle = title.includes("Pen's Pulse") ? title : `${title} | Pen's Pulse`;
+
+// 建立完整的 URL（處理 Astro.site 可能未定義的情況）
+const baseUrl = Astro.site?.href || Astro.url.origin;
+const fullOgImageUrl = new URL(ogImage, baseUrl).href;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="zh-TW">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
-    <title>Bootstrap with Astro</title>
-    <meta name="description" content="Use Bootstrap with Astro" />
+
+    <!-- Primary Meta Tags -->
+    <title>{siteTitle}</title>
+    <meta name="title" content={siteTitle} />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={siteTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={fullOgImageUrl} />
+    <meta property="og:locale" content="zh_TW" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalUrl} />
+    <meta property="twitter:title" content={siteTitle} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={fullOgImageUrl} />
   </head>
   <body>
     <Navbar />
-    <slot />
+    <main id="main-content">
+      <slot />
+    </main>
     <script>
       // Import only what you need
       // import 'bootstrap/js/dist/alert';
