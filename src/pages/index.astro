@@ -41,19 +41,8 @@ import Layout from '../layouts/default-layout.astro';
       <section aria-labelledby="about-me-heading">
         <h2 id="about-me-heading" class="mb-4 section-title">關於我</h2>
         <div class="row g-3">
-          <div class="col-md-4">
-            <article class="card h-100">
-              <div class="card-body">
-                <h3 class="card-title card-title-underline fs-5">個人介紹</h3>
-                <p class="card-text mt-3">
-                  你好！我是一位熱愛技術的開發者，專注於前端開發與技術研究。
-                  在這個部落格中，我將分享我的學習筆記、技術挑戰和開發心得。
-                </p>
-              </div>
-            </article>
-          </div>
-          <div class="col-md-4">
-            <article class="card h-100">
+          <div class="col-md-4 d-flex flex-column gap-3">
+            <article class="card">
               <div class="card-body">
                 <h3 class="card-title card-title-underline fs-5">使用技術</h3>
                 <ul class="card-text mt-3 list-unstyled">
@@ -65,9 +54,8 @@ import Layout from '../layouts/default-layout.astro';
                 </ul>
               </div>
             </article>
-          </div>
-          <div class="col-md-4">
-            <article class="card h-100">
+
+            <article class="card">
               <div class="card-body">
                 <h3 class="card-title card-title-underline fs-5">工作經歷</h3>
                 <ul class="card-text mt-3 list-unstyled">
@@ -76,6 +64,17 @@ import Layout from '../layouts/default-layout.astro';
                   <li>• 自由接案開發者</li>
                   <li>• 技術部落格作者</li>
                 </ul>
+              </div>
+            </article>
+          </div>
+          <div class="col-md-8">
+            <article class="card h-100">
+              <div class="card-body">
+                <h3 class="card-title card-title-underline fs-5">個人介紹</h3>
+                <p class="card-text mt-3">
+                  你好！我是一位熱愛技術的開發者，專注於前端開發與技術研究。
+                  在這個部落格中，我將分享我的學習筆記、技術挑戰和開發心得。
+                </p>
               </div>
             </article>
           </div>

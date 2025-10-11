@@ -38,26 +38,25 @@ import ThemeToggler from './theme-toggler.astro';
         </div>
 
         <!-- Center Column: Search Box -->
-        <div class="d-flex justify-content-center align-items-center">
-          <form style="width: 300px;" role="search">
-            <label for="desktop-search" class="visually-hidden">搜尋網站內容</label>
-            <div class="input-group">
-              <input
-                type="search"
-                id="desktop-search"
-                class="form-control"
-                placeholder="搜尋..."
-                aria-label="搜尋網站內容"
-              />
-              <button class="btn btn-outline-secondary" type="submit" aria-label="執行搜尋">
-                <span class="bi bi-search" aria-hidden="true"></span>
-              </button>
-            </div>
-          </form>
-        </div>
+        <div class="d-flex justify-content-center align-items-center"></div>
 
         <!-- Right Column: External Links & Theme Toggle -->
         <div class="d-flex align-items-center justify-content-end">
+          <div class="bd-search me-2">
+            <button type="button" class="search-button" aria-label="搜尋 (Ctrl+K)">
+              <div class="search-button-container">
+                <i class="bi bi-search search-icon"></i>
+                <span class="search-placeholder">搜尋</span>
+              </div>
+              <div class="search-keys">
+                <kbd class="search-key">
+                  <i class="bi bi-command" style="font-size: 0.8em;"></i>
+                </kbd>
+                <kbd class="search-key">K</kbd>
+              </div>
+            </button>
+          </div>
+
           <a
             href="https://github.com/yourusername/yourrepo"
             target="_blank"
@@ -67,6 +66,7 @@ import ThemeToggler from './theme-toggler.astro';
           >
             <span class="bi bi-github" style="font-size: 1.25rem;" aria-hidden="true"></span>
           </a>
+
           <ThemeToggler />
         </div>
       </div>
@@ -199,6 +199,89 @@ import ThemeToggler from './theme-toggler.astro';
 </nav>
 
 <style>
+  /* Search button styles */
+  .bd-search {
+    position: relative;
+    margin: 0;
+  }
+
+  .search-button {
+    align-items: center;
+    background-color: var(--bs-body-bg);
+    border: 1px solid var(--bs-border-color);
+    border-radius: 6px;
+    color: var(--bs-body-color);
+    display: flex;
+    font-size: 0.875rem;
+    font-weight: 400;
+    height: 2rem;
+    justify-content: space-between;
+    min-width: 200px;
+    padding: 0 0.5rem;
+    text-align: left;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .search-button:hover {
+    background-color: var(--bs-body-bg);
+    border-color: var(--bs-primary);
+    box-shadow: 0 0 0 3px rgb(var(--bs-primary-rgb), 0.1);
+    color: var(--bs-body-color);
+  }
+
+  .search-button:focus {
+    background-color: var(--bs-body-bg);
+    border-color: var(--bs-primary);
+    box-shadow: 0 0 0 3px rgb(var(--bs-primary-rgb), 0.25);
+    color: var(--bs-body-color);
+    outline: 0;
+  }
+
+  .search-button-container {
+    align-items: center;
+    display: flex;
+    gap: 0.5rem;
+    pointer-events: none;
+  }
+
+  .search-icon {
+    color: var(--bs-secondary-color);
+    flex-shrink: 0;
+  }
+
+  .search-placeholder {
+    color: var(--bs-secondary-color);
+    opacity: 0.75;
+  }
+
+  .search-keys {
+    align-items: center;
+    display: flex;
+    gap: 0.25rem;
+    pointer-events: none;
+  }
+
+  .search-key {
+    align-items: center;
+    background-color: var(--bs-tertiary-bg);
+    border: 2px solid var(--bs-border-color);
+    border-radius: 0.25rem;
+    color: var(--bs-secondary-color);
+    display: inline-flex;
+    font-family: var(--bs-font-monospace);
+    font-size: 1em;
+    height: 1.5em;
+    justify-content: center;
+    line-height: 1.2;
+    min-width: 1.2em;
+    padding: 0 0.3em;
+    white-space: nowrap;
+  }
+
+  .search-key-icon {
+    color: var(--bs-secondary-color);
+  }
+
   /* Grid layout for navbar - 3 columns with center column fixed width */
   .navbar-grid-container {
     display: grid;
@@ -260,17 +343,18 @@ import ThemeToggler from './theme-toggler.astro';
   }
 
   .offcanvas-body a:hover {
-    background-color: rgba(0, 0, 0, 0.05);
+    background-color: rgb(0 0 0 / 5%);
   }
 
   [data-bs-theme='dark'] .offcanvas-body a:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgb(255 255 255 / 10%);
   }
 
   [data-bs-theme='dark'] .text-opacity-75-hover {
     color: var(--bs-body-color) !important;
     opacity: 0.75;
   }
+
   [data-bs-theme='dark'] .text-opacity-75-hover:hover {
     opacity: 1;
   }
