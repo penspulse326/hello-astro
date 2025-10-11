@@ -3,13 +3,20 @@ import Layout from '../layouts/default-layout.astro';
 ---
 
 <Layout>
-  <div class="container py-5">
-    <div class="mx-auto" style="max-width: 992px;">
-      <!-- 主標題 - SEO 重要 -->
-      <h1 class="visually-hidden">Pen's Pulse - 技術筆記與開發心得</h1>
+  <!-- 主標題 - SEO 重要 -->
+  <section
+    aria-labelledby="site-title-heading"
+    class="hero-section d-flex align-items-center justify-content-center text-white"
+  >
+    <h1 id="site-title-heading" class="text-center">
+      Pen's Pulse <br />
+      技術筆記與開發心得
+    </h1>
+  </section>
 
+  <div class="container py-5">
+    <div class="mx-auto" style="max-width: 800px;">
       <section aria-labelledby="about-site-heading" class="mb-5">
-        <h2 id="about-site-heading" class="mb-4 section-title">關於本站</h2>
         <div class="row g-3">
           <div class="col-md-4">
             <article class="card h-100">
@@ -39,34 +46,7 @@ import Layout from '../layouts/default-layout.astro';
       </section>
 
       <section aria-labelledby="about-me-heading">
-        <h2 id="about-me-heading" class="mb-4 section-title">關於我</h2>
         <div class="row g-3">
-          <div class="col-md-4 d-flex flex-column gap-3">
-            <article class="card">
-              <div class="card-body">
-                <h3 class="card-title card-title-underline fs-5">使用技術</h3>
-                <ul class="card-text mt-3 list-unstyled">
-                  <li>• TypeScript/JavaScript</li>
-                  <li>• React/Next.js</li>
-                  <li>• Node.js</li>
-                  <li>• 前端工程化</li>
-                  <li>• UI/UX 設計</li>
-                </ul>
-              </div>
-            </article>
-
-            <article class="card">
-              <div class="card-body">
-                <h3 class="card-title card-title-underline fs-5">工作經歷</h3>
-                <ul class="card-text mt-3 list-unstyled">
-                  <li>• 前端工程師 @ 科技公司</li>
-                  <li>• 全端開發工程師 @ 新創公司</li>
-                  <li>• 自由接案開發者</li>
-                  <li>• 技術部落格作者</li>
-                </ul>
-              </div>
-            </article>
-          </div>
           <div class="col-md-8">
             <article class="card h-100">
               <div class="card-body">
@@ -78,6 +58,60 @@ import Layout from '../layouts/default-layout.astro';
               </div>
             </article>
           </div>
+
+          <div class="col-md-4 d-flex flex-column gap-3">
+            <article class="card">
+              <div class="card-body">
+                <h3 class="card-title card-title-underline fs-5">使用技術</h3>
+                <ul class="card-text mt-3 list-unstyled d-flex flex-column gap-2">
+                  <li class="d-flex align-items-center">
+                    <span class="me-2">•</span>
+                    <span>TypeScript/JavaScript</span>
+                  </li>
+                  <li class="d-flex align-items-center">
+                    <span class="me-2">•</span>
+                    <span>React/Next.js</span>
+                  </li>
+                  <li class="d-flex align-items-center">
+                    <span class="me-2">•</span>
+                    <span>Node.js</span>
+                  </li>
+                  <li class="d-flex align-items-center">
+                    <span class="me-2">•</span>
+                    <span>前端工程化</span>
+                  </li>
+                  <li class="d-flex align-items-center">
+                    <span class="me-2">•</span>
+                    <span>UI/UX 設計</span>
+                  </li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="card">
+              <div class="card-body">
+                <h3 class="card-title card-title-underline fs-5">工作經歷</h3>
+                <ul class="card-text mt-3 list-unstyled d-flex flex-column gap-2">
+                  <li class="d-flex align-items-center">
+                    <span class="me-2">•</span>
+                    <span>前端工程師 @ 科技公司</span>
+                  </li>
+                  <li class="d-flex align-items-center">
+                    <span class="me-2">•</span>
+                    <span>全端開發工程師 @ 新創公司</span>
+                  </li>
+                  <li class="d-flex align-items-center">
+                    <span class="me-2">•</span>
+                    <span>自由接案開發者</span>
+                  </li>
+                  <li class="d-flex align-items-center">
+                    <span class="me-2">•</span>
+                    <span>技術部落格作者</span>
+                  </li>
+                </ul>
+              </div>
+            </article>
+          </div>
         </div>
       </section>
     </div>
@@ -85,6 +119,12 @@ import Layout from '../layouts/default-layout.astro';
 </Layout>
 
 <style>
+  /* Hero section with gradient background */
+  .hero-section {
+    height: 300px;
+    background: linear-gradient(to bottom, var(--bs-primary) 0%, #0861c5 100%);
+  }
+
   /* Card title underline */
   .card-title-underline {
     position: relative;
