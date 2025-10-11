@@ -16,13 +16,14 @@ import Layout from '../layouts/default-layout.astro';
 
   <div class="container py-5">
     <div class="mx-auto" style="max-width: 800px;">
-      <section aria-labelledby="about-site-heading" class="mb-5">
+      <section aria-labelledby="about-site-heading" class="mb-3">
         <div class="row g-3">
           <div class="col-md-4">
             <article class="card h-100">
               <div class="card-body">
                 <h3 class="card-title card-title-underline fs-5">研究筆記</h3>
-                <p class="card-text">記錄深入的技術研究與分析，包含各種開發框架、程式語言和工具的深入探討。</p>
+                <p class="card-text mt-2">簡短的摘要，通常不會寫太長，主要寫給自己快速回顧。</p>
+                <a href="#" class="card-link">閱讀更多</a>
               </div>
             </article>
           </div>
@@ -30,7 +31,8 @@ import Layout from '../layouts/default-layout.astro';
             <article class="card h-100">
               <div class="card-body">
                 <h3 class="card-title card-title-underline fs-5">挑戰計畫</h3>
-                <p class="card-text">分享我參與的各種程式挑戰與專案開發歷程，記錄解決問題的過程與心得。</p>
+                <p class="card-text mt-2">以紀錄個人小型專案開發為主的系列文章。</p>
+                <a href="#" class="card-link">閱讀更多</a>
               </div>
             </article>
           </div>
@@ -38,7 +40,8 @@ import Layout from '../layouts/default-layout.astro';
             <article class="card h-100">
               <div class="card-body">
                 <h3 class="card-title card-title-underline fs-5">心得文章</h3>
-                <p class="card-text">分享學習過程中的心得體會、技術見解，以及各種開發經驗與技巧。</p>
+                <p class="card-text mt-2">與職涯、工作、活動等相關的心得文章。</p>
+                <a href="#" class="card-link">閱讀更多</a>
               </div>
             </article>
           </div>
@@ -48,41 +51,35 @@ import Layout from '../layouts/default-layout.astro';
       <section aria-labelledby="about-me-heading">
         <div class="row g-3">
           <div class="col-md-8">
-            <article class="card h-100">
+            <article class="card h-100 overflow-hidden">
               <div class="card-body">
                 <h3 class="card-title card-title-underline fs-5">個人介紹</h3>
-                <p class="card-text mt-3">
-                  你好！我是一位熱愛技術的開發者，專注於前端開發與技術研究。
-                  在這個部落格中，我將分享我的學習筆記、技術挑戰和開發心得。
+                <p class="card-text mt-2">
+                  我是 Shin，在 2024 年 6 月轉職成為前端工程師，至今仍在工作崗位上努力不被 AI 淘汰 XD
+                </p>
+
+                <p class="card-text mt-2 mb-5">
+                  也於 2024 年 7 月開始於六角學院擔任約聘專題教練， 輔導過<span class="fw-bold">切版專題班</span>、
+                  <span class="fw-bold">React 專題班</span>、
+                  <span class="fw-bold">Node.js 全端專題班</span>，主要以<span class="fw-bold">專案規劃</span>、<span
+                    class="fw-bold">可行性評估</span
+                  >、<span class="fw-bold">產品展示</span>等管理層面來協助學生完成網站專題。
                 </p>
               </div>
+              <img src="/avatar.png" alt="Shin" class="avatar rounded-circle" />
             </article>
           </div>
 
           <div class="col-md-4 d-flex flex-column gap-3">
             <article class="card">
               <div class="card-body">
-                <h3 class="card-title card-title-underline fs-5">使用技術</h3>
-                <ul class="card-text mt-3 list-unstyled d-flex flex-column gap-2">
-                  <li class="d-flex align-items-center">
-                    <span class="me-2">•</span>
-                    <span>TypeScript/JavaScript</span>
+                <h3 class="card-title card-title-underline fs-5">經歷</h3>
+                <ul class="card-text mt-2 mt-1 list-unstyled d-flex flex-column gap-2">
+                  <li class="d-flex align-items-end">
+                    <span>💻 前端工程師</span>
                   </li>
                   <li class="d-flex align-items-center">
-                    <span class="me-2">•</span>
-                    <span>React/Next.js</span>
-                  </li>
-                  <li class="d-flex align-items-center">
-                    <span class="me-2">•</span>
-                    <span>Node.js</span>
-                  </li>
-                  <li class="d-flex align-items-center">
-                    <span class="me-2">•</span>
-                    <span>前端工程化</span>
-                  </li>
-                  <li class="d-flex align-items-center">
-                    <span class="me-2">•</span>
-                    <span>UI/UX 設計</span>
+                    <span>✡️ 六角學院 - 專題教練</span>
                   </li>
                 </ul>
               </div>
@@ -90,23 +87,23 @@ import Layout from '../layouts/default-layout.astro';
 
             <article class="card">
               <div class="card-body">
-                <h3 class="card-title card-title-underline fs-5">工作經歷</h3>
-                <ul class="card-text mt-3 list-unstyled d-flex flex-column gap-2">
+                <h3 class="card-title card-title-underline fs-5">使用技術</h3>
+                <ul class="card-text mt-2 mt-1 list-unstyled d-flex flex-column gap-2">
                   <li class="d-flex align-items-center">
                     <span class="me-2">•</span>
-                    <span>前端工程師 @ 科技公司</span>
+                    <span>JavaScript / TypeScript</span>
                   </li>
                   <li class="d-flex align-items-center">
                     <span class="me-2">•</span>
-                    <span>全端開發工程師 @ 新創公司</span>
+                    <span>React / Next.js</span>
                   </li>
                   <li class="d-flex align-items-center">
                     <span class="me-2">•</span>
-                    <span>自由接案開發者</span>
+                    <span>Node.js / Express</span>
                   </li>
                   <li class="d-flex align-items-center">
                     <span class="me-2">•</span>
-                    <span>技術部落格作者</span>
+                    <span>Vue</span>
                   </li>
                 </ul>
               </div>
@@ -141,5 +138,21 @@ import Layout from '../layouts/default-layout.astro';
     width: 80%;
     height: 3px;
     background-color: var(--bs-primary);
+  }
+
+  .avatar {
+    position: absolute;
+    bottom: -40px;
+    right: -40px;
+    width: 250px;
+    height: 250px;
+    opacity: 0.2;
+
+    @media (width >= 768px) {
+      bottom: -40px;
+      right: -20px;
+      width: 300px;
+      height: 300px;
+    }
   }
 </style>
