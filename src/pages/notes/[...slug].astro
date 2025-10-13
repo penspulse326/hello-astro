@@ -1,15 +1,22 @@
 ---
 import Layout from '../../layouts/default-layout.astro';
 import NotesSidebar from '../../components/notes/sidebar.astro';
-import { getNavigation, getNoteByParams } from '../../utils/notes';
+import { getAllNotes, getNavigation } from '../../utils/notes';
+import type { NoteEntry } from '../../utils/notes';
 
-const { slug } = Astro.params;
-const segments = Array.isArray(slug) ? slug : [slug];
-const [category, ...rest] = segments;
-const note = category ? getNoteByParams(category, ...rest) : undefined;
+export function getStaticPaths() {
+  const allNotes = getAllNotes();
+  return allNotes.map((note) => ({
+    params: { slug: note.id },
+    props: { note },
+  }));
+}
+
+const { note } = Astro.props as { note: NoteEntry };
 
 if (!note) {
-  throw Astro.redirect('/notes');
+  // This case should not be reached in static generation
+  return Astro.redirect('/404');
 }
 
 const navigation = getNavigation();
