@@ -1,0 +1,161 @@
+---
+import type { CategoryWithNotes } from '../../utils/notes';
+
+interface Props {
+  navigation: CategoryWithNotes[];
+  activeId?: string;
+}
+
+const { navigation, activeId } = Astro.props;
+
+const sanitizeId = (value: string) => value.replace(/[^a-zA-Z0-9_-]/g, '-');
+---
+
+<aside class="notes-sidebar d-none d-lg-block">
+  <nav aria-label="研究筆記側邊導覽" class="notes-sidebar__nav">
+    <div class="accordion" id="notes-sidebar-accordion">
+      {
+        navigation.map((category) => {
+          const sectionId = `notes-${sanitizeId(category.id)}`;
+          const collapseId = `${sectionId}-collapse`;
+          const headingId = `${sectionId}-heading`;
+          const isExpanded = category.notes.some((note) => note.id === activeId);
+
+          return (
+            <div class="accordion-item">
+              <h2 class="accordion-header" id={headingId}>
+                <button
+                  class:list={{
+                    'accordion-button': true,
+                    collapsed: !isExpanded,
+                  }}
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target={`#${collapseId}`}
+                  aria-expanded={isExpanded}
+                  aria-controls={collapseId}
+                >
+                  <span class="notes-sidebar__section-title">{category.label}</span>
+                </button>
+              </h2>
+              <div
+                id={collapseId}
+                class:list={{
+                  'accordion-collapse collapse': true,
+                  show: isExpanded,
+                }}
+                aria-labelledby={headingId}
+              >
+                <div class="accordion-body">
+                  <ul class="notes-sidebar__list">
+                    {category.notes.map((note) => (
+                      <li
+                        class:list={{
+                          'notes-sidebar__item': true,
+                          'is-active': note.id === activeId,
+                        }}
+                      >
+                        <a href={note.url} class="notes-sidebar__link">
+                          <span>{note.title}</span>
+                          {note.date && (
+                            <time datetime={note.date.toISOString()} class="notes-sidebar__date">
+                              {note.date.toLocaleDateString('zh-TW')}
+                            </time>
+                          )}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          );
+        })
+      }
+    </div>
+  </nav>
+</aside>
+
+<style>
+  .notes-sidebar {
+    position: sticky;
+    top: 5rem;
+    max-height: calc(100vh - 5rem);
+    overflow: auto;
+  }
+
+  .accordion {
+    --bs-accordion-color: inherit;
+    --bs-accordion-bg: transparent;
+    --bs-accordion-border-color: transparent;
+  }
+
+  .accordion-item {
+    border: none;
+    border-radius: 0;
+  }
+
+  .accordion-item + .accordion-item {
+    margin-top: 0.5rem;
+  }
+
+  .accordion-button {
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    padding: 0;
+    background-color: transparent;
+    box-shadow: none;
+    border: none;
+    border-bottom: 1px solid var(--bs-border-color);
+    border-radius: 0;
+  }
+
+  .accordion-button::after {
+    margin-left: auto;
+  }
+
+  .accordion-button:not(.collapsed) {
+    color: inherit;
+    background-color: transparent;
+  }
+
+  .accordion-body {
+    padding: 0.5rem 0 0;
+  }
+
+  .notes-sidebar__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .notes-sidebar__item {
+    border-bottom: 1px solid var(--bs-border-color-translucent);
+    border-radius: 0;
+  }
+
+  .notes-sidebar__item:last-child {
+    border-bottom: none;
+  }
+
+  .notes-sidebar__item.is-active .notes-sidebar__link {
+    font-weight: 600;
+    color: var(--bs-primary);
+  }
+
+  .notes-sidebar__link {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem 0;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .notes-sidebar__date {
+    font-size: 0.75rem;
+    color: var(--bs-secondary-color);
+  }
+</style>

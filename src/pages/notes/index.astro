@@ -1,0 +1,50 @@
+---
+import Layout from '../../layouts/default-layout.astro';
+import NotesSidebar from '../../components/notes/sidebar.astro';
+import { getNavigation } from '../../utils/notes';
+
+const navigation = getNavigation();
+
+const introduction = [
+  '這裡收錄日常技術研究的重點整理，著重於快速回顧與實作備忘。',
+  '每篇筆記對應到特定主題分類，建議從側邊欄選取想閱讀的主題開始。',
+  '內容以 HTML、CSS、JavaScript、後端服務與開發工具等為主，持續更新中。',
+];
+---
+
+<Layout title="研究筆記">
+  <div class="container py-5">
+    <div class="row g-4">
+      <div class="col-lg-3">
+        <NotesSidebar navigation={navigation} />
+      </div>
+      <div class="col-lg-9">
+        <section class="notes-intro">
+          <header class="mb-4">
+            <h1 class="display-6 fw-bold mb-3">研究筆記</h1>
+            <p class="text-secondary mb-0">透過結構化的筆記整理日常學習成果，方便未來快速查找與複習。</p>
+          </header>
+
+          <div class="card shadow-sm border-0 mb-4">
+            <div class="card-body">
+              <h2 class="h5 fw-semibold mb-3">如何使用這個頁面</h2>
+              <ul class="notes-intro__list">
+                {introduction.map((item) => <li>{item}</li>)}
+              </ul>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .notes-intro__list {
+    margin: 0;
+    padding-left: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+</style>
