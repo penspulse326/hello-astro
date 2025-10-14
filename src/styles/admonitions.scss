@@ -1,0 +1,143 @@
+// Admonitions styles using Bootstrap color system
+// Compatible with Docusaurus-style admonitions
+
+.admonition {
+  margin: 1rem 0;
+  padding: 1rem;
+  border-left: 4px solid;
+  background-color: var(--bs-body-bg);
+
+  .admonition-heading {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+
+    i {
+      font-size: 1.25rem;
+    }
+  }
+
+  .admonition-content {
+    > :first-child {
+      margin-top: 0;
+    }
+
+    > :last-child {
+      margin-bottom: 0;
+    }
+
+    p {
+      margin-bottom: 0.75rem;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    code {
+      background-color: rgb(0 0 0 / 5%);
+      padding: 0.125rem 0.25rem;
+      border-radius: 0.25rem;
+      font-size: 0.875em;
+    }
+
+    pre {
+      margin-top: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+
+    ul,
+    ol {
+      margin-bottom: 0.75rem;
+      padding-left: 1.5rem;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    li {
+      margin-bottom: 0.25rem;
+    }
+  }
+}
+
+// Note - Primary (Blue)
+.admonition-note {
+  border-left-color: var(--bs-primary);
+  background-color: var(--bs-primary-bg-subtle);
+
+  .admonition-heading {
+    color: var(--bs-primary);
+  }
+}
+
+// Tip - Success (Green)
+.admonition-tip {
+  border-left-color: var(--bs-success);
+  background-color: var(--bs-success-bg-subtle);
+
+  .admonition-heading {
+    color: var(--bs-success);
+  }
+}
+
+// Info - Info (Cyan)
+.admonition-info {
+  border-left-color: var(--bs-info);
+  background-color: var(--bs-info-bg-subtle);
+
+  .admonition-heading {
+    color: var(--bs-info);
+  }
+}
+
+// Warning - Warning (Yellow/Orange)
+.admonition-warning {
+  border-left-color: var(--bs-warning);
+  background-color: var(--bs-warning-bg-subtle);
+
+  .admonition-heading {
+    color: var(--bs-warning-text-emphasis);
+  }
+}
+
+// Danger - Danger (Red)
+.admonition-danger {
+  border-left-color: var(--bs-danger);
+  background-color: var(--bs-danger-bg-subtle);
+
+  .admonition-heading {
+    color: var(--bs-danger);
+  }
+}
+
+// Dark mode adjustments
+@media (prefers-color-scheme: dark) {
+  .admonition {
+    box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 30%);
+
+    .admonition-content code {
+      background-color: rgb(255 255 255 / 10%);
+    }
+  }
+}
+
+// Responsive adjustments
+@media (width <= 767.98px) {
+  .admonition {
+    margin: 1rem 0;
+    padding: 0.875rem;
+
+    .admonition-heading {
+      font-size: 0.9375rem;
+
+      i {
+        font-size: 1.125rem;
+      }
+    }
+  }
+}

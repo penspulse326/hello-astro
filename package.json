@@ -13,7 +13,9 @@
     "astro": "^5.14.1",
     "bootstrap": "^5.3.8",
     "bootstrap-icons": "^1.13.1",
-    "sass": "^1.93.2"
+    "remark-directive": "^4.0.0",
+    "sass": "^1.93.2",
+    "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
     "husky": "^9.1.7",
