@@ -1,0 +1,59 @@
+---
+import type { CategoryWithNotes } from '../../utils/notes';
+import NotesNavigation from '../notes/notes-navigation.astro';
+
+interface Props {
+  notesNavigation: CategoryWithNotes[];
+  activeNoteId?: string;
+}
+
+const { notesNavigation, activeNoteId } = Astro.props as Props;
+---
+
+<div id="notes-menu-container">
+  <button
+    id="back-to-main-menu"
+    type="button"
+    class="btn btn-link text-decoration-none p-2 mb-3 fw-semibold w-100 text-start bg-body-secondary mt-n3 rounded-0"
+  >
+    <i class="bi bi-arrow-left me-1"></i>
+    回到主選單
+  </button>
+  <div class="notes-drawer">
+    <NotesNavigation
+      navigation={notesNavigation}
+      activeId={activeNoteId}
+      id="notes-drawer-accordion"
+      aAttrs={() => ({ 'data-bs-dismiss': 'offcanvas' })}
+    />
+  </div>
+</div>
+
+<script define:vars={{ activeNoteId }}>
+  const offcanvasElement = document.getElementById('offcanvasNavbar');
+  const mainContainer = document.getElementById('main-menu-container');
+  const notesContainer = document.getElementById('notes-menu-container');
+  const backButton = document.getElementById('back-to-main-menu');
+
+  if (offcanvasElement && mainContainer && notesContainer && backButton) {
+    offcanvasElement.addEventListener('show.bs.offcanvas', () => {
+      // Default to notes menu when opening
+      notesContainer.classList.remove('d-none');
+      mainContainer.classList.add('d-none');
+    });
+
+    backButton.addEventListener('click', () => {
+      // Switch to main menu
+      notesContainer.classList.add('d-none');
+      mainContainer.classList.remove('d-none');
+    });
+  }
+</script>
+
+<style>
+  .notes-drawer {
+    max-height: calc(100dvh - 200px);
+    overflow-y: auto;
+    padding-right: 0;
+  }
+</style>

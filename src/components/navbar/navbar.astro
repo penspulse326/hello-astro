@@ -1,7 +1,7 @@
 ---
 import ThemeToggler from './theme-toggler.astro';
 import type { CategoryWithNotes } from '../../utils/notes';
-import NoteList from '../notes/note-list.astro';
+import NotesMenu from './notes-menu.astro';
 
 const pathname = Astro.url.pathname;
 const isNotesRoute = pathname.startsWith('/notes');
@@ -226,7 +226,7 @@ if (isNotesRoute) {
           </div>
         </div>
 
-        {isNotesRoute && <NoteList {notesNavigation} {activeNoteId} />}
+        {isNotesRoute && <NotesMenu {notesNavigation} {activeNoteId} />}
       </div>
     </div>
   </div>
