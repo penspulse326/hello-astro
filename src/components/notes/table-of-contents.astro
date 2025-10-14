@@ -1,0 +1,275 @@
+---
+import type { MarkdownHeading } from 'astro';
+
+interface Props {
+  headings: MarkdownHeading[];
+  variant?: 'desktop' | 'mobile';
+}
+
+const { headings, variant = 'both' } = Astro.props;
+
+// Filter to only show h2 and h3 headings
+const tocHeadings = headings.filter((h) => h.depth <= 3);
+const showDesktop = variant === 'desktop' || variant === 'both';
+const showMobile = variant === 'mobile' || variant === 'both';
+---
+
+{
+  tocHeadings.length > 0 && (
+    <>
+      {/* Desktop TOC - Fixed on right side */}
+      {showDesktop && (
+        <aside class="toc-desktop d-none d-lg-block">
+          <nav aria-label="目錄">
+            <ul class="toc-list">
+              {tocHeadings.map((heading) => (
+                <li class:list={['toc-item', `toc-item--depth-${heading.depth}`]}>
+                  <a href={`#${heading.slug}`} class="toc-link">
+                    {heading.text}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </aside>
+      )}
+
+      {/* Mobile TOC - Accordion (default expanded) */}
+      {showMobile && (
+        <div class="toc-mobile d-lg-none mb-4">
+          <div class="accordion" id="toc-accordion">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="toc-heading">
+                <button
+                  class="accordion-button p-2"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#toc-collapse"
+                  aria-expanded="true"
+                  aria-controls="toc-collapse"
+                >
+                  <i class="bi bi-list-ul me-2" />
+                  目錄
+                </button>
+              </h2>
+              <div id="toc-collapse" class="accordion-collapse collapse show" aria-labelledby="toc-heading">
+                <div class="accordion-body px-2">
+                  <ul class="toc-list">
+                    {tocHeadings.map((heading) => (
+                      <li class:list={['toc-item', `toc-item--depth-${heading.depth}`]}>
+                        <a href={`#${heading.slug}`} class="toc-link">
+                          {heading.text}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  )
+}
+
+<style>
+  /* Desktop TOC */
+  .toc-desktop {
+    position: sticky;
+    top: 5rem;
+    max-height: calc(100vh - 6rem);
+    overflow-y: auto;
+    background-color: var(--bs-body-bg);
+    border-bottom: 1px solid var(--bs-border-color);
+  }
+
+  .toc-desktop::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .toc-desktop::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .toc-desktop::-webkit-scrollbar-thumb {
+    background: rgb(var(--bs-primary-rgb) / 40%);
+    border-radius: 2px;
+  }
+
+  .toc-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--bs-body-color);
+  }
+
+  .toc-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 0.875rem;
+  }
+
+  .toc-item {
+    margin-bottom: 0.5rem;
+  }
+
+  .toc-item--depth-2 {
+    padding-left: 0;
+  }
+
+  .toc-item--depth-3 {
+    padding-left: 1rem;
+    font-size: 0.9rem;
+  }
+
+  .toc-link {
+    display: block;
+    color: var(--bs-secondary-color);
+    text-decoration: none;
+    padding: 0.25rem 0.5rem;
+    border-left: 2px solid transparent;
+    transition: all 0.2s ease;
+    line-height: 1.4;
+  }
+
+  .toc-link:hover {
+    color: var(--bs-primary);
+    border-left-color: var(--bs-primary);
+    background-color: var(--bs-primary-bg-subtle);
+  }
+
+  .toc-link.active {
+    color: var(--bs-primary);
+    border-left-color: var(--bs-primary);
+    font-weight: 600;
+  }
+
+  /* Mobile TOC */
+  .toc-mobile .accordion {
+    --bs-accordion-border-color: var(--bs-border-color);
+    --bs-accordion-bg: var(--bs-body-bg);
+  }
+
+  .toc-mobile .accordion-button {
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 0.875rem 1rem;
+  }
+
+  .toc-mobile .accordion-button:not(.collapsed) {
+    background-color: var(--bs-primary-bg-subtle);
+    color: var(--bs-primary);
+  }
+
+  .toc-mobile .accordion-body {
+    padding: 1rem;
+  }
+
+  .toc-mobile .toc-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .toc-mobile .toc-item {
+    margin-bottom: 0.5rem;
+  }
+
+  .toc-mobile .toc-item--depth-2 {
+    padding-left: 0;
+  }
+
+  .toc-mobile .toc-item--depth-3 {
+    padding-left: 1rem;
+    font-size: 0.9rem;
+  }
+
+  .toc-mobile .toc-link {
+    display: block;
+    color: var(--bs-body-color);
+    text-decoration: none;
+    padding: 0.375rem 0.5rem;
+    transition: all 0.2s ease;
+  }
+
+  .toc-mobile .toc-link:hover {
+    background-color: var(--bs-primary-bg-subtle);
+    color: var(--bs-primary);
+  }
+
+  .toc-mobile .toc-link.active {
+    background-color: var(--bs-primary-bg-subtle);
+    color: var(--bs-primary);
+    font-weight: 600;
+  }
+</style>
+
+<script>
+  // Intersection Observer for active TOC links
+  function initTOC() {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const id = entry.target.getAttribute('id');
+          if (!id) return;
+
+          const tocLinks = document.querySelectorAll(`a[href="#${id}"]`);
+
+          if (entry.isIntersecting) {
+            // Remove active class from all links
+            document.querySelectorAll('.toc-link.active').forEach((link) => {
+              link.classList.remove('active');
+            });
+
+            // Add active class to current links
+            tocLinks.forEach((link) => {
+              link.classList.add('active');
+            });
+          }
+        });
+      },
+      {
+        rootMargin: '-80px 0px -80% 0px',
+        threshold: 0,
+      },
+    );
+
+    // Observe all headings
+    document.querySelectorAll('.markdown-body h2, .markdown-body h3').forEach((heading) => {
+      observer.observe(heading);
+    });
+
+    // Smooth scroll for TOC links
+    document.querySelectorAll('.toc-link').forEach((link) => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = link.getAttribute('href')?.slice(1);
+        if (!targetId) return;
+
+        const targetElement = document.getElementById(targetId);
+        if (!targetElement) return;
+
+        const offset = 80; // Account for fixed navbar
+        const elementPosition = targetElement.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.scrollY - offset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth',
+        });
+
+        // Update URL without jumping
+        history.pushState(null, '', `#${targetId}`);
+      });
+    });
+  }
+
+  // Initialize on page load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTOC);
+  } else {
+    initTOC();
+  }
+</script>
