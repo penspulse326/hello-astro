@@ -1,6 +1,6 @@
 ---
 import Footer from '../components/footer.astro';
-import Navbar from '../components/navbar.astro';
+import Navbar from '../components/navbar/navbar.astro';
 import '../styles/bootstrap.scss';
 
 interface Props {
@@ -87,6 +87,7 @@ const fullOgImageUrl = new URL(ogImage, baseUrl).href;
   }
 
   #main-content {
-    min-height: calc(100vh - 58px);
+    /* 減去 Navbar height + Footer height */
+    min-height: calc(100vh - 114px);
   }
 </style>

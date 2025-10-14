@@ -1,18 +1,18 @@
 ---
 import ThemeToggler from './theme-toggler.astro';
-import type { CategoryWithNotes } from '../utils/notes';
+import type { CategoryWithNotes } from '../../utils/notes';
+import NoteList from '../notes/note-list.astro';
 
 const pathname = Astro.url.pathname;
 const isNotesRoute = pathname.startsWith('/notes');
 
 const normalizePath = (path: string) => (path.endsWith('/') && path !== '/' ? path.slice(0, -1) : path);
-const sanitizeId = (value: string) => value.replace(/[^a-zA-Z0-9_-]/g, '-');
 
 let notesNavigation: CategoryWithNotes[] = [];
 let activeNoteId: string | undefined;
 
 if (isNotesRoute) {
-  const { getNavigation } = await import('../utils/notes');
+  const { getNavigation } = await import('../../utils/notes');
   notesNavigation = getNavigation();
 
   const currentPath = normalizePath(pathname);
@@ -162,7 +162,7 @@ if (isNotesRoute) {
 
           <!-- External Links -->
           <div class="row g-2">
-            <div class="col-6 m-0">
+            <div class="col-6">
               <a
                 href="https://github.com/yourusername/yourrepo"
                 target="_blank"
@@ -176,7 +176,7 @@ if (isNotesRoute) {
                 </div>
               </a>
             </div>
-            <div class="col-6 m-0">
+            <div class="col-6">
               <a
                 href="https://example.com"
                 target="_blank"
@@ -226,100 +226,10 @@ if (isNotesRoute) {
           </div>
         </div>
 
-        {
-          isNotesRoute && (
-            <div id="notes-menu-container">
-              <button
-                id="back-to-main-menu"
-                type="button"
-                class="btn btn-link text-decoration-none p-0 mb-3 fw-semibold"
-              >
-                <i class="bi bi-arrow-left me-1" />
-                回到主選單
-              </button>
-              <div class="notes-drawer">
-                <div class="accordion" id="notesDrawerAccordion">
-                  {notesNavigation.map((category) => {
-                    const sectionId = `notes-drawer-${sanitizeId(category.id)}`;
-                    const collapseId = `${sectionId}-collapse`;
-                    const headingId = `${sectionId}-heading`;
-                    const isExpanded = category.notes.some((note) => note.id === activeNoteId);
-
-                    return (
-                      <div class="accordion-item border-0 border-bottom">
-                        <h2 class="accordion-header" id={headingId}>
-                          <button
-                            class:list={{
-                              'accordion-button': true,
-                              collapsed: !isExpanded,
-                            }}
-                            type="button"
-                            data-bs-toggle="collapse"
-                            data-bs-target={`#${collapseId}`}
-                            aria-expanded={isExpanded}
-                            aria-controls={collapseId}
-                          >
-                            {category.label}
-                          </button>
-                        </h2>
-                        <div
-                          id={collapseId}
-                          class:list={{
-                            'accordion-collapse collapse': true,
-                            show: isExpanded,
-                          }}
-                          aria-labelledby={headingId}
-                        >
-                          <div class="accordion-body pt-0 pb-3">
-                            <ul class="list-unstyled m-0">
-                              {category.notes.map((note) => (
-                                <li class="notes-drawer-item">
-                                  <a
-                                    class:list={{
-                                      'notes-drawer-link': true,
-                                      active: note.id === activeNoteId,
-                                    }}
-                                    href={note.url}
-                                    data-bs-dismiss="offcanvas"
-                                  >
-                                    {note.title}
-                                  </a>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
-          )
-        }
+        {isNotesRoute && <NoteList {notesNavigation} {activeNoteId} />}
       </div>
     </div>
   </div>
-  <script define:vars={{ isNotesRoute }}>
-    if (isNotesRoute) {
-      const offcanvasElement = document.getElementById('offcanvasNavbar');
-      const mainContainer = document.getElementById('main-menu-container');
-      const notesContainer = document.getElementById('notes-menu-container');
-      const backButton = document.getElementById('back-to-main-menu');
-
-      offcanvasElement.addEventListener('show.bs.offcanvas', () => {
-        // Default to notes menu when opening
-        notesContainer.classList.remove('d-none');
-        mainContainer.classList.add('d-none');
-      });
-
-      backButton.addEventListener('click', () => {
-        // Switch to main menu
-        notesContainer.classList.add('d-none');
-        mainContainer.classList.remove('d-none');
-      });
-    }
-  </script>
 </nav>
 
 <style>

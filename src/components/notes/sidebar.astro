@@ -57,11 +57,6 @@ const sanitizeId = (value: string) => value.replace(/[^a-zA-Z0-9_-]/g, '-');
                       >
                         <a href={note.url} class="notes-sidebar__link">
                           <span>{note.title}</span>
-                          {note.date && (
-                            <time datetime={note.date.toISOString()} class="notes-sidebar__date">
-                              {note.date.toLocaleDateString('zh-TW')}
-                            </time>
-                          )}
                         </a>
                       </li>
                     ))}
@@ -100,10 +95,9 @@ const sanitizeId = (value: string) => value.replace(/[^a-zA-Z0-9_-]/g, '-');
   }
 
   .accordion-button {
-    font-size: 0.95rem;
     font-weight: 600;
     letter-spacing: 0.05em;
-    padding: 0;
+    padding: 8px 0;
     background-color: transparent;
     box-shadow: none;
     border: none;
