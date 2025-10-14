@@ -85,8 +85,21 @@ const fullOgImageUrl = new URL(ogImage, baseUrl).href;
     font-family: LINESeed, sans-serif;
   }
 
+  /* 固定 y 軸滾動條 */
+  html {
+    overflow-y: scroll;
+  }
+
+  body {
+    overflow-y: auto;
+  }
+
   #main-content {
     /* 減去 Navbar height + Footer height */
-    min-height: calc(100dvh - 114px);
+    min-height: calc(100dvh - 58px - 80px);
+
+    @media (width >= 992px) {
+      min-height: calc(100dvh - 58px - 56px);
+    }
   }
 </style>
