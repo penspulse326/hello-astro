@@ -88,6 +88,23 @@ const fullOgImageUrl = new URL(ogImage, baseUrl).href;
   /* 固定 y 軸滾動條 */
   html {
     overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: var(--bs-primary);
+      border-radius: 0;
+    }
+
+    &::-webkit-scrollbar-thumb:active {
+      background: rgb(var(--bs-primary-rgb), 0.8);
+    }
   }
 
   body {
