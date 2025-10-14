@@ -1,7 +1,6 @@
 ---
-import Layout from '../../layouts/default-layout.astro';
-import NotesSidebar from '../../components/notes/sidebar.astro';
-import TableOfContents from '../../components/notes/table-of-contents.astro';
+import ArticleLayout from '../../layouts/article-layout.astro';
+import TableOfContents from '../../components/table-of-contents.astro';
 import { getAllNotes, getNavigation } from '../../utils/notes';
 import type { NoteEntry } from '../../utils/notes';
 
@@ -26,53 +25,43 @@ const pageTitle = `${note.frontmatter.title} | 研究筆記`;
 const headings = await note.getHeadings();
 ---
 
-<Layout title={pageTitle} description={note.frontmatter.description}>
-  <div class="container pt-0 pt-lg-5 pb-5">
-    <div class="row g-4">
-      <div class="col-lg-3">
-        <NotesSidebar navigation={navigation} activeId={activeId} />
+<ArticleLayout
+  title={pageTitle}
+  description={note.frontmatter.description}
+  navigation={navigation}
+  activeId={activeId}
+  headings={headings}
+>
+  <article class="notes-article px-2 px-lg-4 w-full">
+    <header class="mb-4">
+      <h1 class="display-6 fw-bold mb-3">{note.frontmatter.title}</h1>
+      <div class="d-flex flex-wrap align-items-center gap-3">
+        {
+          note.frontmatter.date && (
+            <time datetime={note.frontmatter.date.toISOString()} class="notes-article__meta text-secondary">
+              {note.frontmatter.date.toLocaleDateString('zh-TW')}
+            </time>
+          )
+        }
+        {
+          note.frontmatter.tags && note.frontmatter.tags.length > 0 && (
+            <ul class="list-unstyled d-flex flex-wrap gap-2 mb-0">
+              {note.frontmatter.tags.map((tag) => (
+                <li>
+                  <span class="badge text-bg-light border">#{tag}</span>
+                </li>
+              ))}
+            </ul>
+          )
+        }
       </div>
-      <div class="col-lg-9">
-        <div class="row g-4">
-          <div class="col-lg-9">
-            <article class="notes-article px-2 px-lg-0">
-              <header class="mb-4">
-                <h1 class="display-6 fw-bold mb-3">{note.frontmatter.title}</h1>
-                <div class="d-flex flex-wrap align-items-center gap-3">
-                  {
-                    note.frontmatter.date && (
-                      <time datetime={note.frontmatter.date.toISOString()} class="notes-article__meta text-secondary">
-                        {note.frontmatter.date.toLocaleDateString('zh-TW')}
-                      </time>
-                    )
-                  }
-                  {
-                    note.frontmatter.tags && note.frontmatter.tags.length > 0 && (
-                      <ul class="list-unstyled d-flex flex-wrap gap-2 mb-0">
-                        {note.frontmatter.tags.map((tag) => (
-                          <li>
-                            <span class="badge text-bg-light border">#{tag}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    )
-                  }
-                </div>
-              </header>
-              <TableOfContents headings={headings} variant="mobile" />
-              <div class="markdown-body">
-                <note.Content />
-              </div>
-            </article>
-          </div>
-          <div class="col-lg-3 d-none d-lg-block">
-            <TableOfContents headings={headings} variant="desktop" />
-          </div>
-        </div>
-      </div>
+    </header>
+    <TableOfContents headings={headings} variant="mobile" />
+    <div class="markdown-body">
+      <note.Content />
     </div>
-  </div>
-</Layout>
+  </article>
+</ArticleLayout>
 
 <style>
   .notes-article {

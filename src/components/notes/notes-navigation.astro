@@ -78,6 +78,7 @@ const sanitizeId = (value: string) => value.replace(/[^a-zA-Z0-9_-]/g, '-');
   .accordion-item {
     border: none;
     border-radius: 0;
+    font-size: 0.9rem;
   }
 
   .accordion-button {
@@ -89,6 +90,7 @@ const sanitizeId = (value: string) => value.replace(/[^a-zA-Z0-9_-]/g, '-');
     border: none;
     border-bottom: 1px solid var(--bs-border-color);
     border-radius: 0;
+    font-size: 0.9rem;
   }
 
   .accordion-button::after {
@@ -118,12 +120,13 @@ const sanitizeId = (value: string) => value.replace(/[^a-zA-Z0-9_-]/g, '-');
 
   .notes-nav__item:last-child {
     border-bottom: none;
+    margin-bottom: 12px;
   }
 
   .notes-nav__link {
     display: flex;
     flex-direction: column;
-    padding: 0.5rem;
+    padding: 0.25rem 0.75rem;
     text-decoration: none;
     color: inherit;
     transition: all 0.2s ease-in-out;
