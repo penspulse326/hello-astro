@@ -1,7 +1,8 @@
 ---
-import ThemeToggler from './theme-toggler.astro';
 import type { CategoryWithNotes } from '../../utils/notes';
+
 import NotesMenu from './notes-menu.astro';
+import ThemeToggler from './theme-toggler.astro';
 
 const pathname = Astro.url.pathname;
 const isNotesRoute = pathname.startsWith('/notes');
@@ -38,7 +39,7 @@ if (isNotesRoute) {
   <div class="container">
     <!-- Logo -->
     <a class="navbar-brand me-4 d-lg-none" href="/">
-      <img src="/logo.png" alt="Pen's Pulse Logo" height="30" class="d-inline-block align-text-top" />
+      <img alt="Pen's Pulse Logo" class="d-inline-block align-text-top" height="30" src="/logo.png" />
     </a>
 
     <!-- 桌面版導覽列 - 僅在 lg 以上顯示 -->
@@ -48,7 +49,7 @@ if (isNotesRoute) {
         <div class="d-flex align-items-center">
           <!-- 品牌標誌 -->
           <a class="navbar-brand me-4" href="/">
-            <img src="/logo.png" alt="Pen's Pulse 首頁" height="30" class="d-inline-block align-text-top" />
+            <img alt="Pen's Pulse 首頁" class="d-inline-block align-text-top" height="30" src="/logo.png" />
           </a>
 
           <!-- 站內連結 -->
@@ -75,7 +76,7 @@ if (isNotesRoute) {
         <div class="d-flex align-items-center justify-content-end">
           <!-- 搜尋框 -->
           <div class="bd-search me-2">
-            <button type="button" class="search-button" aria-label="搜尋 (Ctrl+K)">
+            <button aria-label="搜尋 (Ctrl+K)" class="search-button" type="button">
               <div class="search-button-container">
                 <i class="bi bi-search search-icon"></i>
                 <span class="search-placeholder">搜尋</span>
@@ -91,13 +92,13 @@ if (isNotesRoute) {
 
           <!-- 外部連結 -->
           <a
-            href="https://github.com/penspulse326"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-body-emphasis text-opacity-75-hover px-2"
             aria-label="前往 GitHub 查看專案"
+            class="text-body-emphasis text-opacity-75-hover px-2"
+            href="https://github.com/penspulse326"
+            rel="noopener noreferrer"
+            target="_blank"
           >
-            <span class="bi bi-github" style="font-size: 1.25rem;" aria-hidden="true"></span>
+            <span aria-hidden="true" class="bi bi-github" style="font-size: 1.25rem;"></span>
           </a>
 
           <!-- 主題切換 -->
@@ -108,26 +109,26 @@ if (isNotesRoute) {
 
     <!-- 手機版選單按鈕 - 僅在小於 lg 螢幕顯示 -->
     <button
-      class="navbar-toggler px-1 border-0"
-      type="button"
-      data-bs-toggle="offcanvas"
-      data-bs-target="#offcanvasNavbar"
       aria-controls="offcanvasNavbar"
       aria-label="Toggle navigation"
+      class="navbar-toggler px-1 border-0"
+      data-bs-target="#offcanvasNavbar"
+      data-bs-toggle="offcanvas"
+      type="button"
     >
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <!-- 側邊選單 - 僅在手機版顯示 -->
     <div
-      class="offcanvas offcanvas-end d-lg-none"
-      tabindex="-1"
-      id="offcanvasNavbar"
       aria-labelledby="offcanvasNavbarLabel"
+      class="offcanvas offcanvas-end d-lg-none"
+      id="offcanvasNavbar"
+      tabindex="-1"
     >
       <div class="offcanvas-header">
         <h5 class="offcanvas-title fw-bold" id="offcanvasNavbarLabel">Pen's Pulse</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        <button aria-label="Close" class="btn-close" data-bs-dismiss="offcanvas" type="button"></button>
       </div>
 
       <hr class="mx-3 mt-0" />
@@ -137,25 +138,25 @@ if (isNotesRoute) {
           <!-- 內部連結 - 兩欄排列 -->
           <div class="row g-3">
             <div class="col-6 m-0">
-              <a href="/notes" class="d-block py-2 text-decoration-none text-body">
+              <a class="d-block py-2 text-decoration-none text-body" href="/notes">
                 <div class="d-flex align-items-center">
-                  <span class="bi bi-journal-text me-2" aria-hidden="true"></span>
+                  <span aria-hidden="true" class="bi bi-journal-text me-2"></span>
                   <span>研究筆記</span>
                 </div>
               </a>
             </div>
             <div class="col-6 m-0">
-              <a href="/challenges" class="d-block py-2 text-decoration-none text-body">
+              <a class="d-block py-2 text-decoration-none text-body" href="/challenges">
                 <div class="d-flex align-items-center">
-                  <span class="bi bi-trophy me-2" aria-hidden="true"></span>
+                  <span aria-hidden="true" class="bi bi-trophy me-2"></span>
                   <span>挑戰計畫</span>
                 </div>
               </a>
             </div>
             <div class="col-6 m-0">
-              <a href="/articles" class="d-block py-2 text-decoration-none text-body">
+              <a class="d-block py-2 text-decoration-none text-body" href="/articles">
                 <div class="d-flex align-items-center">
-                  <span class="bi bi-file-earmark-text me-2" aria-hidden="true"></span>
+                  <span aria-hidden="true" class="bi bi-file-earmark-text me-2"></span>
                   <span>心得文章</span>
                 </div>
               </a>
@@ -168,28 +169,28 @@ if (isNotesRoute) {
           <div class="row g-2">
             <div class="col-6">
               <a
-                href="https://github.com/yourusername/yourrepo"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="d-block py-2 text-decoration-none text-body"
                 aria-label="前往 GitHub 查看專案"
+                class="d-block py-2 text-decoration-none text-body"
+                href="https://github.com/yourusername/yourrepo"
+                rel="noopener noreferrer"
+                target="_blank"
               >
                 <div class="d-flex align-items-center">
-                  <span class="bi bi-github me-2" aria-hidden="true"></span>
+                  <span aria-hidden="true" class="bi bi-github me-2"></span>
                   <span>GitHub</span>
                 </div>
               </a>
             </div>
             <div class="col-6">
               <a
-                href="https://example.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="d-block py-2 text-decoration-none text-body"
                 aria-label="前往外部連結"
+                class="d-block py-2 text-decoration-none text-body"
+                href="https://example.com"
+                rel="noopener noreferrer"
+                target="_blank"
               >
                 <div class="d-flex alignments-center">
-                  <span class="bi bi-box-arrow-up-right me-2" aria-hidden="true"></span>
+                  <span aria-hidden="true" class="bi bi-box-arrow-up-right me-2"></span>
                   <span>外部連結</span>
                 </div>
               </a>
@@ -201,8 +202,8 @@ if (isNotesRoute) {
           <!-- 主題切換 -->
           <div
             class="d-flex align-items-center"
-            style="cursor: pointer;"
             onclick="document.getElementById('bd-theme').click()"
+            style="cursor: pointer;"
           >
             <ThemeToggler />
             <span class="me-3">主題切換</span>
@@ -213,24 +214,24 @@ if (isNotesRoute) {
           <!-- 搜尋 -->
           <div class="mt-3">
             <form role="search">
-              <label for="mobile-search" class="visually-hidden">搜尋網站內容</label>
+              <label class="visually-hidden" for="mobile-search">搜尋網站內容</label>
               <div class="input-group">
                 <input
-                  type="search"
-                  id="mobile-search"
-                  class="form-control"
-                  placeholder="搜尋..."
                   aria-label="搜尋網站內容"
+                  class="form-control"
+                  id="mobile-search"
+                  placeholder="搜尋..."
+                  type="search"
                 />
-                <button class="btn btn-outline-primary" type="submit" aria-label="執行搜尋">
-                  <span class="bi bi-search" aria-hidden="true"></span>
+                <button aria-label="執行搜尋" class="btn btn-outline-primary" type="submit">
+                  <span aria-hidden="true" class="bi bi-search"></span>
                 </button>
               </div>
             </form>
           </div>
         </div>
 
-        {isNotesRoute && <NotesMenu {notesNavigation} {activeNoteId} />}
+        {isNotesRoute && <NotesMenu {activeNoteId} {notesNavigation} />}
       </div>
     </div>
   </div>
