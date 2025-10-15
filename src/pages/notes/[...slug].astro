@@ -40,19 +40,8 @@ const headings = await note.getHeadings();
         {
           note.frontmatter.date && (
             <time class="notes-article__meta text-secondary" datetime={note.frontmatter.date.toISOString()}>
-              {note.frontmatter.date.toLocaleDateString('zh-TW')}
+              {note.frontmatter.date.toLocaleDateString('zh-TW')} 發布
             </time>
-          )
-        }
-        {
-          note.frontmatter.tags && note.frontmatter.tags.length > 0 && (
-            <ul class="list-unstyled d-flex flex-wrap gap-2 mb-0">
-              {note.frontmatter.tags.map((tag) => (
-                <li>
-                  <span class="badge text-bg-light border">#{tag}</span>
-                </li>
-              ))}
-            </ul>
           )
         }
       </div>
