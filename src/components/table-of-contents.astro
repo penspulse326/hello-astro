@@ -8,7 +8,7 @@ interface Props {
 
 const { headings, variant = 'both' } = Astro.props;
 
-// Filter to only show h2 and h3 headings
+// 僅顯示 h2 和 h3 標題
 const tocHeadings = headings.filter((h) => h.depth <= 3);
 const showDesktop = variant === 'desktop' || variant === 'both';
 const showMobile = variant === 'mobile' || variant === 'both';
@@ -17,7 +17,7 @@ const showMobile = variant === 'mobile' || variant === 'both';
 {
   tocHeadings.length > 0 && (
     <>
-      {/* Desktop TOC - Fixed on right side */}
+      {/* 桌面版目錄 - 固定在右側 */}
       {showDesktop && (
         <aside class="toc-desktop d-none d-lg-block">
           <nav aria-label="目錄">
@@ -34,7 +34,7 @@ const showMobile = variant === 'mobile' || variant === 'both';
         </aside>
       )}
 
-      {/* Mobile TOC - Accordion (default expanded) */}
+      {/* 手機版目錄 - 手風琴（預設展開）*/}
       {showMobile && (
         <div class="toc-mobile d-lg-none mb-4">
           <div class="accordion" id="toc-accordion">
@@ -74,7 +74,7 @@ const showMobile = variant === 'mobile' || variant === 'both';
 }
 
 <style>
-  /* Desktop TOC */
+  /* 桌面版目錄樣式 */
   .toc-desktop {
     position: sticky;
     top: 5rem;
@@ -84,6 +84,7 @@ const showMobile = variant === 'mobile' || variant === 'both';
     border-bottom: 1px solid var(--bs-border-color);
   }
 
+  /* 捲軸樣式 */
   .toc-desktop::-webkit-scrollbar {
     width: 4px;
   }
@@ -97,6 +98,7 @@ const showMobile = variant === 'mobile' || variant === 'both';
     border-radius: 2px;
   }
 
+  /* 目錄標題樣式 */
   .toc-title {
     font-size: 1rem;
     font-weight: 600;
@@ -104,6 +106,7 @@ const showMobile = variant === 'mobile' || variant === 'both';
     color: var(--bs-body-color);
   }
 
+  /* 目錄列表樣式 */
   .toc-list {
     list-style: none;
     padding: 0;
@@ -124,6 +127,7 @@ const showMobile = variant === 'mobile' || variant === 'both';
     font-size: 0.9rem;
   }
 
+  /* 目錄連結樣式 */
   .toc-link {
     display: block;
     color: var(--bs-secondary-color);
@@ -146,7 +150,7 @@ const showMobile = variant === 'mobile' || variant === 'both';
     font-weight: 600;
   }
 
-  /* Mobile TOC */
+  /* 手機版目錄樣式 */
   .toc-mobile .accordion {
     --bs-accordion-border-color: var(--bs-border-color);
     --bs-accordion-bg: var(--bs-body-bg);
@@ -207,7 +211,7 @@ const showMobile = variant === 'mobile' || variant === 'both';
 </style>
 
 <script>
-  // Intersection Observer for active TOC links
+  // 初始化目錄功能
   function initTOC() {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -218,12 +222,12 @@ const showMobile = variant === 'mobile' || variant === 'both';
           const tocLinks = document.querySelectorAll(`a[href="#${id}"]`);
 
           if (entry.isIntersecting) {
-            // Remove active class from all links
+            // 移除所有連結的 active class
             document.querySelectorAll('.toc-link.active').forEach((link) => {
               link.classList.remove('active');
             });
 
-            // Add active class to current links
+            // 為當前連結加上 active class
             tocLinks.forEach((link) => {
               link.classList.add('active');
             });
@@ -236,12 +240,12 @@ const showMobile = variant === 'mobile' || variant === 'both';
       },
     );
 
-    // Observe all headings
+    // 監聽所有標題
     document.querySelectorAll('.markdown-body h2, .markdown-body h3').forEach((heading) => {
       observer.observe(heading);
     });
 
-    // Smooth scroll for TOC links
+    // 目錄連結平滑捲動
     document.querySelectorAll('.toc-link').forEach((link) => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
@@ -251,7 +255,7 @@ const showMobile = variant === 'mobile' || variant === 'both';
         const targetElement = document.getElementById(targetId);
         if (!targetElement) return;
 
-        const offset = 80; // Account for fixed navbar
+        const offset = 80; // 固定導覽列高度
         const elementPosition = targetElement.getBoundingClientRect().top;
         const offsetPosition = elementPosition + window.scrollY - offset;
 
@@ -260,13 +264,13 @@ const showMobile = variant === 'mobile' || variant === 'both';
           behavior: 'smooth',
         });
 
-        // Update URL without jumping
+        // 更新 URL 但不跳轉
         history.pushState(null, '', `#${targetId}`);
       });
     });
   }
 
-  // Initialize on page load
+  // 頁面載入時初始化
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initTOC);
   } else {

@@ -15,7 +15,7 @@ export function getStaticPaths() {
 const { note } = Astro.props as { note: NoteEntry };
 
 if (!note) {
-  // This case should not be reached in static generation
+  // 靜態生成時不應該發生此情況
   return Astro.redirect('/404');
 }
 
@@ -32,7 +32,7 @@ const headings = await note.getHeadings();
   activeId={activeId}
   headings={headings}
 >
-  <article class="notes-article px-2 px-lg-4 w-full">
+  <article class="notes-article px-2 px-lg-4">
     <header class="mb-4">
       <h1 class="display-6 fw-bold mb-3">{note.frontmatter.title}</h1>
       <div class="d-flex flex-wrap align-items-center gap-3">
@@ -64,10 +64,12 @@ const headings = await note.getHeadings();
 </ArticleLayout>
 
 <style>
+  /* 筆記文章樣式 */
   .notes-article {
     background-color: var(--bs-body-bg);
   }
 
+  /* 筆記文章 meta 資訊樣式 */
   .notes-article__meta {
     font-size: 0.9rem;
     letter-spacing: 0.05em;

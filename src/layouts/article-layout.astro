@@ -20,16 +20,20 @@ const { title, description, navigation, activeId, headings = [], showToc = true 
 <Layout title={title} description={description}>
   <div class="container py-5">
     <div class="d-flex">
-      <NotesSidebar navigation={navigation} activeId={activeId} />
+      <!-- 側邊導覽 -->
+      <div class="flex-shrink-0">
+        <NotesSidebar navigation={navigation} activeId={activeId} />
+      </div>
+
       <!-- 內文 -->
-      <div>
+      <div class="flex-grow-1">
         <slot />
       </div>
 
       <!-- 目錄 -->
       {
         showToc && headings.length > 0 && (
-          <div class="d-none d-lg-block w-100" style={{ maxWidth: '200px' }}>
+          <div class="d-none d-lg-block  flex-shrink-0" style={{ width: '200px' }}>
             <TableOfContents headings={headings} variant="desktop" />
           </div>
         )

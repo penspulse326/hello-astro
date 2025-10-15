@@ -1,7 +1,7 @@
 ---
 import Footer from '../components/footer.astro';
 import Navbar from '../components/navbar/navbar.astro';
-import '../styles/bootstrap.scss';
+import '../styles/all.scss';
 
 interface Props {
   title?: string;
@@ -19,7 +19,7 @@ const {
 
 const siteTitle = title.includes("Pen's Pulse") ? title : `${title} | Pen's Pulse`;
 
-// 建立完整的 URL（處理 Astro.site 可能未定義的情況）
+// 建立完整的 URL
 const baseUrl = Astro.site?.href || Astro.url.origin;
 const fullOgImageUrl = new URL(ogImage, baseUrl).href;
 ---
@@ -32,7 +32,7 @@ const fullOgImageUrl = new URL(ogImage, baseUrl).href;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
 
-    <!-- Primary Meta Tags -->
+    <!-- 主要 Meta 標籤 -->
     <title>{siteTitle}</title>
     <meta name="title" content={siteTitle} />
     <meta name="description" content={description} />
@@ -61,27 +61,14 @@ const fullOgImageUrl = new URL(ogImage, baseUrl).href;
     <Footer />
 
     <script>
-      // Import only what you need
-      // import 'bootstrap/js/dist/alert';
-      // import 'bootstrap/js/dist/button';
-      // import 'bootstrap/js/dist/carousel';
-      // import 'bootstrap/js/dist/collapse';
-      // import 'bootstrap/js/dist/dropdown';
-      // import 'bootstrap/js/dist/modal';
-      // import 'bootstrap/js/dist/offcanvas';
-      // import 'bootstrap/js/dist/popover';
-      // import 'bootstrap/js/dist/scrollspy';
-      // import 'bootstrap/js/dist/tab';
-      // import 'bootstrap/js/dist/toast';
-      // import 'bootstrap/js/dist/tooltip';
-      // Import everything
+      // 引入所有 Bootstrap JS 功能
       import 'bootstrap/dist/js/bootstrap';
     </script>
   </body>
 </html>
 
 <style is:inline>
-  /* 固定 y 軸滾動條 */
+  /* 固定 Y 軸捲軸 */
   html {
     overflow-y: scroll;
 
@@ -107,12 +94,12 @@ const fullOgImageUrl = new URL(ogImage, baseUrl).href;
     overflow-y: auto;
   }
 
+  /* 主要內容區域最小高度 */
   #main-content {
-    /* 減去 Navbar height + Footer height */
-    min-height: calc(100dvh - 58px - 80px);
+    min-height: calc(100dvh - 60px - 80px);
 
     @media (width >= 992px) {
-      min-height: calc(100dvh - 58px - 56px);
+      min-height: calc(100dvh - 60px - 56px);
     }
   }
 </style>

@@ -3,7 +3,7 @@ import Layout from '../layouts/default-layout.astro';
 ---
 
 <Layout>
-  <!-- 主標題 - SEO 重要 -->
+  <!-- 主標題區域 -->
   <section
     aria-labelledby="site-title-heading"
     class="hero-section d-flex align-items-center justify-content-center text-white"
@@ -116,13 +116,13 @@ import Layout from '../layouts/default-layout.astro';
 </Layout>
 
 <style>
-  /* Hero section with gradient background */
+  /* 主視覺區樣式 */
   .hero-section {
     height: 300px;
     background: linear-gradient(to bottom, var(--bs-primary) 0%, #0861c5 100%);
   }
 
-  /* Card title underline */
+  /* 卡片標題底線 */
   .card-title-underline {
     position: relative;
     display: inline-block;
@@ -140,6 +140,7 @@ import Layout from '../layouts/default-layout.astro';
     background-color: var(--bs-primary);
   }
 
+  /* 頭像樣式 */
   .avatar {
     position: absolute;
     bottom: -40px;
