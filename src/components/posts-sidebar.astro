@@ -20,9 +20,9 @@ function formatDate(date?: Date): string {
 }
 ---
 
-<aside class="d-none d-lg-block ps-1 pe-2 pt-1 mt-n1" style={{ width: '200px' }}>
+<aside class="d-none d-lg-block" style={{ width: '200px' }}>
   <!-- 近期文章 -->
-  <nav aria-label="近期文章" class="mb-4">
+  <nav aria-label="近期文章" class="mt-2 mb-4">
     <h3 class="sidebar-title">近期文章</h3>
     <ul class="list-unstyled">
       {
@@ -38,7 +38,7 @@ function formatDate(date?: Date): string {
   </nav>
 
   <!-- 標籤雲 -->
-  <nav aria-label="標籤雲">
+  <nav aria-label="標籤雲" class="mt-2">
     <h3 class="sidebar-title">標籤</h3>
     <div class="tag-cloud">
       {
@@ -114,17 +114,18 @@ function formatDate(date?: Date): string {
     align-items: center;
     gap: 0.25rem;
     padding: 0.25rem 0.5rem;
-    font-size: 0.75rem;
-    background-color: rgb(var(--bs-primary-rgb), 0.1);
-    color: var(--bs-primary);
+    font-size: 0.875rem;
+    font-weight: 400;
+    background-color: var(--bs-primary);
+    color: white;
     border-radius: 0.25rem;
     text-decoration: none;
     transition: all 0.2s;
   }
 
   .tag-item:hover {
-    background-color: var(--bs-primary);
-    color: white;
+    background-color: rgb(var(--bs-primary-rgb), 0.2);
+    color: var(--bs-primary);
   }
 
   .tag-count {
