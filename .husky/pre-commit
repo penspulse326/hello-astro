@@ -1,6 +1,1 @@
-# 確保使用正確的 Node.js 版本
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-nvm use 22.16.0
-
 npx lint-staged
