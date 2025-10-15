@@ -17,28 +17,3 @@ const { activeId, ariaLabel = '側邊導覽', navigation } = Astro.props;
     <ContentNavigation activeId={activeId} id="content-sidebar-accordion" navigation={navigation} />
   </nav>
 </aside>
-
-<style>
-  /* 側邊欄樣式 */
-  aside {
-    position: sticky;
-    top: 5rem;
-    max-height: calc(100dvh - 5rem);
-    height: 100%;
-    overflow: scroll;
-  }
-
-  /* 捲軸樣式 */
-  aside::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  aside::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  aside::-webkit-scrollbar-thumb {
-    background: rgb(var(--bs-primary-rgb), 0.4);
-    border-radius: 0;
-  }
-</style>

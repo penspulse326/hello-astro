@@ -56,25 +56,7 @@ function formatDate(date?: Date): string {
 <style>
   /* 側邊欄樣式 */
   aside {
-    position: sticky;
-    top: 5rem;
-    max-height: calc(100dvh - 5rem);
-    height: 100%;
-    overflow: scroll;
-  }
-
-  /* 捲軸樣式 */
-  aside::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  aside::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  aside::-webkit-scrollbar-thumb {
-    background: rgb(var(--bs-primary-rgb), 0.4);
-    border-radius: 0;
+    /* sticky 樣式由外層 layout 控制 */
   }
 
   /* 側邊欄標題 */
