@@ -1,7 +1,7 @@
 ---
 import PostExcerpt from '../../components/post-excerpt.astro';
 import PostsSidebar from '../../components/posts-sidebar.astro';
-import Layout from '../../layouts/default-layout.astro';
+import ArticleLayout from '../../layouts/article-layout.astro';
 import { getPostsSortedByDate, getRecentPosts, getTagCloud } from '../../utils/posts';
 
 // 取得所有文章
@@ -29,136 +29,100 @@ function formatDate(date?: Date): string {
 }
 ---
 
-<Layout description="與職涯、工作、活動等相關的心得文章" title="心得文章">
-  <div class="container py-4">
-    <div class="d-flex">
-      <!-- 側邊欄 -->
-      <div class="posts-sidebar flex-shrink-0">
-        <PostsSidebar recentPosts={recentPosts} tagCloud={tagCloud} />
+<ArticleLayout description="與職涯、工作、活動等相關的心得文章" showToc={false} title="心得文章">
+  <PostsSidebar recentPosts={recentPosts} slot="sidebar" tagCloud={tagCloud} />
+
+  <div class="mx-n3">
+    <div class="px-2 px-lg-4">
+      <!-- 文章列表 -->
+      <div class="posts-list">
+        {
+          posts.map((post) => {
+            const { Content } = post;
+
+            return (
+              <article class="post-item border-bottom rounded-0 p-3">
+                <h2 class="h4 mb-3">
+                  <a class="text-decoration-none text-body" href={post.url}>
+                    {post.frontmatter.title}
+                  </a>
+                </h2>
+
+                {post.frontmatter.date && (
+                  <div class="post-meta text-muted mb-3">
+                    <small>
+                      <i class="bi bi-calendar3" /> {formatDate(post.frontmatter.date)}
+                      {post.frontmatter.tags && post.frontmatter.tags.length > 0 && (
+                        <span class="ms-3">
+                          <i class="bi bi-tags" />{' '}
+                          {post.frontmatter.tags.map((tag, index) => (
+                            <>
+                              <a class="text-muted text-decoration-none" href={`/posts?tag=${encodeURIComponent(tag)}`}>
+                                {tag}
+                              </a>
+                              {index < (post.frontmatter.tags?.length ?? 0) - 1 && ', '}
+                            </>
+                          ))}
+                        </span>
+                      )}
+                    </small>
+                  </div>
+                )}
+
+                <div class="post-content mb-3">
+                  <PostExcerpt Content={Content} />
+                </div>
+
+                <a class="btn btn-outline-primary btn-sm" href={post.url}>
+                  閱讀更多 →
+                </a>
+              </article>
+            );
+          })
+        }
       </div>
 
-      <!-- 主要內容 -->
-      <div class="flex-grow-1 mx-n3" style={{ minWidth: 0 }}>
-        <div class="px-2 px-lg-4">
-          <!-- 文章列表 -->
-          <div class="posts-list">
-            {
-              posts.map((post) => {
-                const { Content } = post;
+      <!-- 分頁 -->
+      {
+        totalPages > 1 && (
+          <nav aria-label="文章分頁">
+            <ul class="pagination justify-content-center">
+              <li class:list={['page-item', { disabled: currentPage === 1 }]}>
+                <a
+                  aria-label="上一頁"
+                  class="page-link"
+                  href={currentPage > 1 ? `/posts?page=${currentPage - 1}` : '#'}
+                >
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
 
-                return (
-                  <article class="post-item border-bottom rounded-0 p-3">
-                    <h2 class="h4 mb-3">
-                      <a class="text-decoration-none text-body" href={post.url}>
-                        {post.frontmatter.title}
-                      </a>
-                    </h2>
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                <li class:list={['page-item', { active: page === currentPage }]}>
+                  <a class="page-link" href={page === 1 ? '/posts' : `/posts?page=${page}`}>
+                    {page}
+                  </a>
+                </li>
+              ))}
 
-                    {post.frontmatter.date && (
-                      <div class="post-meta text-muted mb-3">
-                        <small>
-                          <i class="bi bi-calendar3" /> {formatDate(post.frontmatter.date)}
-                          {post.frontmatter.tags && post.frontmatter.tags.length > 0 && (
-                            <span class="ms-3">
-                              <i class="bi bi-tags" />{' '}
-                              {post.frontmatter.tags.map((tag, index) => (
-                                <>
-                                  <a
-                                    class="text-muted text-decoration-none"
-                                    href={`/posts?tag=${encodeURIComponent(tag)}`}
-                                  >
-                                    {tag}
-                                  </a>
-                                  {index < (post.frontmatter.tags?.length ?? 0) - 1 && ', '}
-                                </>
-                              ))}
-                            </span>
-                          )}
-                        </small>
-                      </div>
-                    )}
-
-                    <div class="post-content mb-3">
-                      <PostExcerpt Content={Content} />
-                    </div>
-
-                    <a class="btn btn-outline-primary btn-sm" href={post.url}>
-                      閱讀更多 →
-                    </a>
-                  </article>
-                );
-              })
-            }
-          </div>
-
-          <!-- 分頁 -->
-          {
-            totalPages > 1 && (
-              <nav aria-label="文章分頁">
-                <ul class="pagination justify-content-center">
-                  <li class:list={['page-item', { disabled: currentPage === 1 }]}>
-                    <a
-                      aria-label="上一頁"
-                      class="page-link"
-                      href={currentPage > 1 ? `/posts?page=${currentPage - 1}` : '#'}
-                    >
-                      <span aria-hidden="true">&laquo;</span>
-                    </a>
-                  </li>
-
-                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                    <li class:list={['page-item', { active: page === currentPage }]}>
-                      <a class="page-link" href={page === 1 ? '/posts' : `/posts?page=${page}`}>
-                        {page}
-                      </a>
-                    </li>
-                  ))}
-
-                  <li class:list={['page-item', { disabled: currentPage === totalPages }]}>
-                    <a
-                      aria-label="下一頁"
-                      class="page-link"
-                      href={currentPage < totalPages ? `/posts?page=${currentPage + 1}` : '#'}
-                    >
-                      <span aria-hidden="true">&raquo;</span>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
-            )
-          }
-        </div>
-      </div>
+              <li class:list={['page-item', { disabled: currentPage === totalPages }]}>
+                <a
+                  aria-label="下一頁"
+                  class="page-link"
+                  href={currentPage < totalPages ? `/posts?page=${currentPage + 1}` : '#'}
+                >
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        )
+      }
     </div>
   </div>
-</Layout>
+</ArticleLayout>
 
 <style>
-  /* 側邊欄 sticky 樣式 */
-  .posts-sidebar {
-    @media (width >= 992px) {
-      position: sticky;
-      top: calc(1rem + 60px);
-      align-self: flex-start;
-      max-height: calc(100dvh - 60px - 6rem);
-      overflow: scroll;
-    }
-
-    /* 捲軸樣式 */
-    &::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    &::-webkit-scrollbar-track {
-      background: transparent;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background: rgb(var(--bs-primary-rgb), 0.4);
-      border-radius: 0;
-    }
-  }
-
   /* 文章項目樣式 */
   .post-item {
     transition: 0.2s;
