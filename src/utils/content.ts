@@ -175,7 +175,7 @@ export function createContentManager(contentPath: string, urlPrefix: string) {
   for (const category of groupedCategories.values()) {
     category.items.sort((a, b) => {
       if (a.date && b.date) {
-        return b.date.getTime() - a.date.getTime();
+        return a.date.getTime() - b.date.getTime(); // 改為升序（舊到新）
       }
 
       if (a.date) {

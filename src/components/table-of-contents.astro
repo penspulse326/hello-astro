@@ -73,6 +73,74 @@ const showMobile = variant === 'mobile' || variant === 'both';
   )
 }
 
+<script>
+  // 初始化目錄功能
+  function initTOC() {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const id = entry.target.getAttribute('id');
+          if (!id) return;
+
+          const tocLinks = document.querySelectorAll(`a[href="#${id}"]`);
+
+          if (entry.isIntersecting) {
+            // 移除所有連結的 active class
+            document.querySelectorAll('.toc-link.active').forEach((link) => {
+              link.classList.remove('active');
+            });
+
+            // 為當前連結加上 active class
+            tocLinks.forEach((link) => {
+              link.classList.add('active');
+            });
+          }
+        });
+      },
+      {
+        rootMargin: '-80px 0px -80% 0px',
+        threshold: 0,
+      },
+    );
+
+    // 監聽所有標題
+    document.querySelectorAll('.markdown-body h2, .markdown-body h3').forEach((heading) => {
+      observer.observe(heading);
+    });
+
+    // 目錄連結平滑捲動
+    document.querySelectorAll('.toc-link').forEach((link) => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = link.getAttribute('href')?.slice(1);
+        if (!targetId) return;
+
+        const targetElement = document.getElementById(targetId);
+        if (!targetElement) return;
+
+        const offset = 80; // 固定導覽列高度
+        const elementPosition = targetElement.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.scrollY - offset;
+
+        window.scrollTo({
+          behavior: 'smooth',
+          top: offsetPosition,
+        });
+
+        // 更新 URL 但不跳轉
+        history.pushState(null, '', `#${targetId}`);
+      });
+    });
+  }
+
+  // 頁面載入時初始化
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTOC);
+  } else {
+    initTOC();
+  }
+</script>
+
 <style>
   /* 桌面版目錄樣式 */
   .toc-desktop {
@@ -209,71 +277,3 @@ const showMobile = variant === 'mobile' || variant === 'both';
     font-weight: 600;
   }
 </style>
-
-<script>
-  // 初始化目錄功能
-  function initTOC() {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const id = entry.target.getAttribute('id');
-          if (!id) return;
-
-          const tocLinks = document.querySelectorAll(`a[href="#${id}"]`);
-
-          if (entry.isIntersecting) {
-            // 移除所有連結的 active class
-            document.querySelectorAll('.toc-link.active').forEach((link) => {
-              link.classList.remove('active');
-            });
-
-            // 為當前連結加上 active class
-            tocLinks.forEach((link) => {
-              link.classList.add('active');
-            });
-          }
-        });
-      },
-      {
-        rootMargin: '-80px 0px -80% 0px',
-        threshold: 0,
-      },
-    );
-
-    // 監聽所有標題
-    document.querySelectorAll('.markdown-body h2, .markdown-body h3').forEach((heading) => {
-      observer.observe(heading);
-    });
-
-    // 目錄連結平滑捲動
-    document.querySelectorAll('.toc-link').forEach((link) => {
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const targetId = link.getAttribute('href')?.slice(1);
-        if (!targetId) return;
-
-        const targetElement = document.getElementById(targetId);
-        if (!targetElement) return;
-
-        const offset = 80; // 固定導覽列高度
-        const elementPosition = targetElement.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.scrollY - offset;
-
-        window.scrollTo({
-          behavior: 'smooth',
-          top: offsetPosition,
-        });
-
-        // 更新 URL 但不跳轉
-        history.pushState(null, '', `#${targetId}`);
-      });
-    });
-  }
-
-  // 頁面載入時初始化
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initTOC);
-  } else {
-    initTOC();
-  }
-</script>
