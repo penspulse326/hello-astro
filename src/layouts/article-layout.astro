@@ -42,7 +42,7 @@ const hasCustomSidebar = Astro.slots.has('sidebar');
 
       <!-- 目錄 -->
       {
-        showToc && headings.length > 0 && (
+        showToc && (
           <aside class="content-toc d-none d-lg-block flex-shrink-0 mt-3" style={{ width: '200px' }}>
             <TableOfContents headings={headings} variant="desktop" />
           </aside>
@@ -56,9 +56,8 @@ const hasCustomSidebar = Astro.slots.has('sidebar');
   .content-sidebar {
     @media (width >= 992px) {
       position: sticky;
-      top: calc(60px + 1.5rem);
-      align-self: flex-start;
-      max-height: calc(100dvh - 60px - 56px - 1.5rem);
+      top: calc(60px + 1rem);
+      height: calc(100dvh - 60px - 56px - 1.5rem);
       overflow: scroll;
     }
 
