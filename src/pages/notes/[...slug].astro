@@ -1,8 +1,9 @@
 ---
-import ArticleLayout from '../../layouts/article-layout.astro';
-import TableOfContents from '../../components/table-of-contents.astro';
-import { getAllNotes, getNavigation } from '../../utils/notes';
 import type { NoteEntry } from '../../utils/notes';
+
+import TableOfContents from '../../components/table-of-contents.astro';
+import ArticleLayout from '../../layouts/article-layout.astro';
+import { getAllNotes, getNavigation } from '../../utils/notes';
 
 export function getStaticPaths() {
   const allNotes = getAllNotes();
@@ -26,11 +27,11 @@ const headings = await note.getHeadings();
 ---
 
 <ArticleLayout
-  title={pageTitle}
-  description={note.frontmatter.description}
-  navigation={navigation}
   activeId={activeId}
+  description={note.frontmatter.description}
   headings={headings}
+  navigation={navigation}
+  title={pageTitle}
 >
   <article class="notes-article px-2 px-lg-4">
     <header class="mb-4">
@@ -38,7 +39,7 @@ const headings = await note.getHeadings();
       <div class="d-flex flex-wrap align-items-center gap-3">
         {
           note.frontmatter.date && (
-            <time datetime={note.frontmatter.date.toISOString()} class="notes-article__meta text-secondary">
+            <time class="notes-article__meta text-secondary" datetime={note.frontmatter.date.toISOString()}>
               {note.frontmatter.date.toLocaleDateString('zh-TW')}
             </time>
           )

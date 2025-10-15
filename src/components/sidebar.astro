@@ -1,18 +1,19 @@
 ---
 import type { CategoryWithNotes } from '../utils/notes';
+
 import NotesNavigation from './notes/notes-navigation.astro';
 
 interface Props {
-  navigation: CategoryWithNotes[];
   activeId?: string;
+  navigation: CategoryWithNotes[];
 }
 
-const { navigation, activeId } = Astro.props;
+const { activeId, navigation } = Astro.props;
 ---
 
 <aside class="d-none d-lg-block ps-1 pe-2 pt-1 mt-n1" style={{ width: '200px' }}>
   <nav aria-label="研究筆記側邊導覽">
-    <NotesNavigation navigation={navigation} activeId={activeId} id="notes-sidebar-accordion" />
+    <NotesNavigation activeId={activeId} id="notes-sidebar-accordion" navigation={navigation} />
   </nav>
 </aside>
 

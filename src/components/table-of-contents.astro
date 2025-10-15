@@ -24,7 +24,7 @@ const showMobile = variant === 'mobile' || variant === 'both';
             <ul class="toc-list">
               {tocHeadings.map((heading) => (
                 <li class:list={['toc-item', `toc-item--depth-${heading.depth}`]}>
-                  <a href={`#${heading.slug}`} class="toc-link">
+                  <a class="toc-link" href={`#${heading.slug}`}>
                     {heading.text}
                   </a>
                 </li>
@@ -41,23 +41,23 @@ const showMobile = variant === 'mobile' || variant === 'both';
             <div class="accordion-item">
               <h2 class="accordion-header" id="toc-heading">
                 <button
-                  class="accordion-button p-2"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#toc-collapse"
-                  aria-expanded="true"
                   aria-controls="toc-collapse"
+                  aria-expanded="true"
+                  class="accordion-button p-2"
+                  data-bs-target="#toc-collapse"
+                  data-bs-toggle="collapse"
+                  type="button"
                 >
                   <i class="bi bi-list-ul me-2" />
                   目錄
                 </button>
               </h2>
-              <div id="toc-collapse" class="accordion-collapse collapse show" aria-labelledby="toc-heading">
+              <div aria-labelledby="toc-heading" class="accordion-collapse collapse show" id="toc-collapse">
                 <div class="accordion-body px-2">
                   <ul class="toc-list">
                     {tocHeadings.map((heading) => (
                       <li class:list={['toc-item', `toc-item--depth-${heading.depth}`]}>
-                        <a href={`#${heading.slug}`} class="toc-link">
+                        <a class="toc-link" href={`#${heading.slug}`}>
                           {heading.text}
                         </a>
                       </li>
@@ -260,8 +260,8 @@ const showMobile = variant === 'mobile' || variant === 'both';
         const offsetPosition = elementPosition + window.scrollY - offset;
 
         window.scrollTo({
-          top: offsetPosition,
           behavior: 'smooth',
+          top: offsetPosition,
         });
 
         // 更新 URL 但不跳轉

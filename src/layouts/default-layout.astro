@@ -4,17 +4,17 @@ import Navbar from '../components/navbar/navbar.astro';
 import '../styles/all.scss';
 
 interface Props {
-  title?: string;
+  canonicalUrl?: string;
   description?: string;
   ogImage?: string;
-  canonicalUrl?: string;
+  title?: string;
 }
 
 const {
-  title = "Pen's Pulse - 技術筆記與開發心得",
+  canonicalUrl = Astro.url.href,
   description = '分享技術研究筆記、程式挑戰計畫與開發心得，記錄前端開發與技術學習的點點滴滴',
   ogImage = '/og-image.png',
-  canonicalUrl = Astro.url.href,
+  title = "Pen's Pulse - 技術筆記與開發心得",
 } = Astro.props;
 
 const siteTitle = title.includes("Pen's Pulse") ? title : `${title} | Pen's Pulse`;
@@ -28,30 +28,30 @@ const fullOgImageUrl = new URL(ogImage, baseUrl).href;
 <html lang="zh-TW">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="generator" content={Astro.generator} />
+    <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta content={Astro.generator} name="generator" />
 
     <!-- 主要 Meta 標籤 -->
     <title>{siteTitle}</title>
-    <meta name="title" content={siteTitle} />
-    <meta name="description" content={description} />
-    <link rel="canonical" href={canonicalUrl} />
+    <meta content={siteTitle} name="title" />
+    <meta content={description} name="description" />
+    <link href={canonicalUrl} rel="canonical" />
 
     <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content={canonicalUrl} />
-    <meta property="og:title" content={siteTitle} />
-    <meta property="og:description" content={description} />
-    <meta property="og:image" content={fullOgImageUrl} />
-    <meta property="og:locale" content="zh_TW" />
+    <meta content="website" property="og:type" />
+    <meta content={canonicalUrl} property="og:url" />
+    <meta content={siteTitle} property="og:title" />
+    <meta content={description} property="og:description" />
+    <meta content={fullOgImageUrl} property="og:image" />
+    <meta content="zh_TW" property="og:locale" />
 
     <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content={canonicalUrl} />
-    <meta property="twitter:title" content={siteTitle} />
-    <meta property="twitter:description" content={description} />
-    <meta property="twitter:image" content={fullOgImageUrl} />
+    <meta content="summary_large_image" property="twitter:card" />
+    <meta content={canonicalUrl} property="twitter:url" />
+    <meta content={siteTitle} property="twitter:title" />
+    <meta content={description} property="twitter:description" />
+    <meta content={fullOgImageUrl} property="twitter:image" />
   </head>
   <body>
     <Navbar />
@@ -64,42 +64,42 @@ const fullOgImageUrl = new URL(ogImage, baseUrl).href;
       // 引入所有 Bootstrap JS 功能
       import 'bootstrap/dist/js/bootstrap';
     </script>
+
+    <style is:inline>
+      /* 固定 Y 軸捲軸 */
+      html {
+        overflow-y: scroll;
+
+        &::-webkit-scrollbar {
+          width: 8px;
+        }
+
+        &::-webkit-scrollbar-track {
+          background: transparent;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background: var(--bs-primary);
+          border-radius: 0;
+        }
+
+        &::-webkit-scrollbar-thumb:active {
+          background: rgb(var(--bs-primary-rgb), 0.8);
+        }
+      }
+
+      body {
+        overflow-y: auto;
+      }
+
+      /* 主要內容區域最小高度 */
+      #main-content {
+        min-height: calc(100dvh - 60px - 80px);
+
+        @media (width >= 992px) {
+          min-height: calc(100dvh - 60px - 56px);
+        }
+      }
+    </style>
   </body>
 </html>
-
-<style is:inline>
-  /* 固定 Y 軸捲軸 */
-  html {
-    overflow-y: scroll;
-
-    &::-webkit-scrollbar {
-      width: 8px;
-    }
-
-    &::-webkit-scrollbar-track {
-      background: transparent;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background: var(--bs-primary);
-      border-radius: 0;
-    }
-
-    &::-webkit-scrollbar-thumb:active {
-      background: rgb(var(--bs-primary-rgb), 0.8);
-    }
-  }
-
-  body {
-    overflow-y: auto;
-  }
-
-  /* 主要內容區域最小高度 */
-  #main-content {
-    min-height: calc(100dvh - 60px - 80px);
-
-    @media (width >= 992px) {
-      min-height: calc(100dvh - 60px - 56px);
-    }
-  }
-</style>

@@ -1,28 +1,30 @@
 ---
 import type { MarkdownHeading } from 'astro';
-import Layout from './default-layout.astro';
-import NotesSidebar from '../components/sidebar.astro';
-import TableOfContents from '../components/table-of-contents.astro';
+
 import type { CategoryWithNotes } from '../utils/notes';
 
+import NotesSidebar from '../components/sidebar.astro';
+import TableOfContents from '../components/table-of-contents.astro';
+import Layout from './default-layout.astro';
+
 interface Props {
-  title: string;
-  description?: string;
-  navigation: CategoryWithNotes[];
   activeId?: string;
+  description?: string;
   headings?: MarkdownHeading[];
+  navigation: CategoryWithNotes[];
   showToc?: boolean;
+  title: string;
 }
 
-const { title, description, navigation, activeId, headings = [], showToc = true } = Astro.props;
+const { activeId, description, headings = [], navigation, showToc = true, title } = Astro.props;
 ---
 
-<Layout title={title} description={description}>
+<Layout description={description} title={title}>
   <div class="container py-5">
     <div class="d-flex">
       <!-- 側邊導覽 -->
       <div class="flex-shrink-0">
-        <NotesSidebar navigation={navigation} activeId={activeId} />
+        <NotesSidebar activeId={activeId} navigation={navigation} />
       </div>
 
       <!-- 內文 -->

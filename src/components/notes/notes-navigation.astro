@@ -1,14 +1,14 @@
 ---
-import type { CategoryWithNotes, CategoryNoteItem } from '../../utils/notes';
+import type { CategoryNoteItem, CategoryWithNotes } from '../../utils/notes';
 
 interface Props {
-  navigation: CategoryWithNotes[];
+  aAttrs?: (note: CategoryNoteItem) => Record<string, boolean | string | undefined>;
   activeId?: string;
   id: string;
-  aAttrs?: (note: CategoryNoteItem) => Record<string, string | boolean | undefined>;
+  navigation: CategoryWithNotes[];
 }
 
-const { navigation, activeId, id, aAttrs } = Astro.props;
+const { aAttrs, activeId, id, navigation } = Astro.props;
 
 const sanitizeId = (value: string) => value.replace(/[^a-zA-Z0-9_-]/g, '-');
 ---
@@ -25,34 +25,34 @@ const sanitizeId = (value: string) => value.replace(/[^a-zA-Z0-9_-]/g, '-');
         <div class="accordion-item">
           <h2 class="accordion-header" id={headingId}>
             <button
+              aria-controls={collapseId}
+              aria-expanded={isExpanded}
               class:list={{
                 'accordion-button': true,
                 collapsed: !isExpanded,
               }}
-              type="button"
-              data-bs-toggle="collapse"
               data-bs-target={`#${collapseId}`}
-              aria-expanded={isExpanded}
-              aria-controls={collapseId}
+              data-bs-toggle="collapse"
+              type="button"
             >
               {category.label}
             </button>
           </h2>
           <div
-            id={collapseId}
+            aria-labelledby={headingId}
             class:list={{
               'accordion-collapse collapse': true,
               show: isExpanded,
             }}
-            aria-labelledby={headingId}
+            id={collapseId}
           >
             <div class="accordion-body">
               <ul class="notes-nav__list">
                 {category.notes.map((note: CategoryNoteItem) => (
                   <li class="notes-nav__item">
                     <a
-                      href={note.url}
                       class:list={['notes-nav__link', { 'notes-nav__link--active': note.id === activeId }]}
+                      href={note.url}
                       {...(aAttrs?.(note) || {})}
                     >
                       {note.title}

@@ -6,30 +6,30 @@ import { visit } from 'unist-util-visit';
  */
 export function remarkAdmonitions() {
   const admonitionTypes = {
-    note: {
-      keyword: '筆記',
-      icon: 'bi-pencil-square',
-      className: 'note',
-    },
-    tip: {
-      keyword: '提示',
-      icon: 'bi-lightbulb',
-      className: 'tip',
+    danger: {
+      className: 'danger',
+      icon: 'bi-x-octagon',
+      keyword: '危險',
     },
     info: {
-      keyword: '資訊',
-      icon: 'bi-info-circle',
       className: 'info',
+      icon: 'bi-info-circle',
+      keyword: '資訊',
+    },
+    note: {
+      className: 'note',
+      icon: 'bi-pencil-square',
+      keyword: '筆記',
+    },
+    tip: {
+      className: 'tip',
+      icon: 'bi-lightbulb',
+      keyword: '提示',
     },
     warning: {
-      keyword: '警告',
-      icon: 'bi-exclamation-triangle',
       className: 'warning',
-    },
-    danger: {
-      keyword: '危險',
-      icon: 'bi-x-octagon',
-      className: 'danger',
+      icon: 'bi-exclamation-triangle',
+      keyword: '警告',
     },
   };
 
@@ -59,13 +59,6 @@ export function remarkAdmonitions() {
 
         // Create the title element
         const titleNode = {
-          type: 'paragraph',
-          data: {
-            hName: 'div',
-            hProperties: {
-              class: 'admonition-heading',
-            },
-          },
           children: [
             {
               type: 'html',
@@ -76,18 +69,25 @@ export function remarkAdmonitions() {
               value: title,
             },
           ],
+          data: {
+            hName: 'div',
+            hProperties: {
+              class: 'admonition-heading',
+            },
+          },
+          type: 'paragraph',
         };
 
         // Create the content wrapper
         const contentNode = {
-          type: 'paragraph',
+          children: node.children,
           data: {
             hName: 'div',
             hProperties: {
               class: 'admonition-content',
             },
           },
-          children: node.children,
+          type: 'paragraph',
         };
 
         // Replace children with structured content
