@@ -1,18 +1,25 @@
 ---
 import type { CategoryWithContent } from '../../utils/content';
+import type { CategoryPostItem } from '../../utils/posts';
 
 import ContentMenu from './content-menu.astro';
+import PostsMenu from './posts-menu.astro';
 import ThemeToggler from './theme-toggler.astro';
 
 const pathname = Astro.url.pathname;
 const isNotesRoute = pathname.startsWith('/notes');
 const isPlansRoute = pathname.startsWith('/plans');
+const isPostsRoute = pathname.startsWith('/posts');
 const isContentRoute = isNotesRoute || isPlansRoute;
+const hasCustomMenu = isContentRoute || isPostsRoute;
 
 const normalizePath = (path: string) => (path.endsWith('/') && path !== '/' ? path.slice(0, -1) : path);
 
 let contentNavigation: CategoryWithContent[] = [];
 let activeContentId: string | undefined;
+let postsRecentPosts: CategoryPostItem[] = [];
+let postsTagCloud: Array<{ count: number; tag: string }> = [];
+let activePostId: string | undefined;
 
 if (isNotesRoute) {
   const { getNavigation } = await import('../../utils/notes');
@@ -55,6 +62,16 @@ if (isNotesRoute) {
     if (activeContentId) {
       break;
     }
+  }
+} else if (isPostsRoute) {
+  const { getRecentPosts, getTagCloud } = await import('../../utils/posts');
+  postsRecentPosts = getRecentPosts(5);
+  postsTagCloud = getTagCloud();
+
+  // 從 URL 取得當前文章的 slug
+  const pathParts = pathname.split('/').filter(Boolean);
+  if (pathParts.length > 1) {
+    activePostId = pathParts[pathParts.length - 1];
   }
 }
 ---
@@ -170,7 +187,7 @@ if (isNotesRoute) {
               </a>
             </div>
             <div class="col-6 m-0">
-              <a class="d-block py-2 text-decoration-none text-body" href="/challenges">
+              <a class="d-block py-2 text-decoration-none text-body" href="/plans">
                 <div class="d-flex align-items-center">
                   <span aria-hidden="true" class="bi bi-trophy me-2"></span>
                   <span>挑戰計畫</span>
@@ -178,7 +195,7 @@ if (isNotesRoute) {
               </a>
             </div>
             <div class="col-6 m-0">
-              <a class="d-block py-2 text-decoration-none text-body" href="/articles">
+              <a class="d-block py-2 text-decoration-none text-body" href="/posts">
                 <div class="d-flex align-items-center">
                   <span aria-hidden="true" class="bi bi-file-earmark-text me-2"></span>
                   <span>心得文章</span>
@@ -259,6 +276,14 @@ if (isNotesRoute) {
           isContentRoute && (
             <div id="content-menu-container">
               <ContentMenu activeId={activeContentId} navigation={contentNavigation} />
+            </div>
+          )
+        }
+
+        {
+          isPostsRoute && (
+            <div id="posts-menu-container">
+              <PostsMenu activeId={activePostId} recentPosts={postsRecentPosts} tagCloud={postsTagCloud} />
             </div>
           )
         }

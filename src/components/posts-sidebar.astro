@@ -30,7 +30,6 @@ function formatDate(date?: Date): string {
           <li class="mb-2">
             <a class:list={['post-link', { active: activeId === post.id }]} href={post.url} title={post.title}>
               <div class="post-title">{post.title}</div>
-              {post.date && <div class="post-date text-muted">{formatDate(post.date)}</div>}
             </a>
           </li>
         ))

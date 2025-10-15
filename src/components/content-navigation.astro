@@ -68,6 +68,75 @@ const sanitizeId = (value: string) => value.replace(/[^a-zA-Z0-9_-]/g, '-');
   }
 </div>
 
+<script>
+  // 處理 offcanvas 內的導航連結點擊
+  function initContentNavigation() {
+    const navLinks = document.querySelectorAll('.content-nav__link[data-bs-dismiss="offcanvas"]');
+
+    navLinks.forEach((link) => {
+      link.addEventListener('click', (e) => {
+        const href = link.getAttribute('href');
+
+        // 確保有有效的 href
+        if (!href || href === '#') {
+          return;
+        }
+
+        // 阻止預設行為，我們會手動處理導航
+        e.preventDefault();
+
+        // 找到 offcanvas 元素
+        const offcanvasElement = document.getElementById('offcanvasNavbar');
+
+        if (offcanvasElement) {
+          // 檢查 Bootstrap 是否可用
+          if (typeof window.bootstrap !== 'undefined' && window.bootstrap.Offcanvas) {
+            // 使用 Bootstrap 的 API 關閉 offcanvas
+            const bsOffcanvas = window.bootstrap.Offcanvas.getInstance(offcanvasElement);
+            if (bsOffcanvas) {
+              bsOffcanvas.hide();
+            }
+
+            // 在 offcanvas 關閉動畫完成後導航
+            offcanvasElement.addEventListener(
+              'hidden.bs.offcanvas',
+              () => {
+                window.location.href = href;
+              },
+              { once: true },
+            );
+          } else {
+            // 如果 Bootstrap 未載入，使用簡單的方式關閉
+            offcanvasElement.classList.remove('show');
+            const backdrop = document.querySelector('.offcanvas-backdrop');
+            if (backdrop) {
+              backdrop.remove();
+            }
+            document.body.classList.remove('offcanvas-open');
+            document.body.style.overflow = '';
+            document.body.style.paddingRight = '';
+
+            // 短暫延遲後導航，讓動畫有時間執行
+            setTimeout(() => {
+              window.location.href = href;
+            }, 150);
+          }
+        } else {
+          // 如果找不到 offcanvas，直接導航
+          window.location.href = href;
+        }
+      });
+    });
+  }
+
+  // 頁面載入時初始化
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initContentNavigation);
+  } else {
+    initContentNavigation();
+  }
+</script>
+
 <style>
   /* 手風琴基礎樣式 */
   .accordion {

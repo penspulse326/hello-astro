@@ -1,0 +1,163 @@
+---
+import type { CategoryPostItem } from '../../utils/posts';
+
+interface Props {
+  activeId?: string;
+  recentPosts: CategoryPostItem[];
+  tagCloud: Array<{ count: number; tag: string }>;
+}
+
+const { activeId, recentPosts, tagCloud } = Astro.props;
+---
+
+<button
+  class="btn btn-link text-decoration-none p-2 mb-3 fw-semibold w-100 text-start bg-body-secondary mt-n3 rounded-0"
+  id="back-to-main-menu"
+  type="button"
+>
+  <i class="bi bi-arrow-left me-1"></i>
+  回到主選單
+</button>
+<div class="posts-drawer px-2">
+  <!-- 近期文章 -->
+  <div class="mb-4">
+    <h3 class="drawer-title">近期文章</h3>
+    <ul class="list-unstyled">
+      {
+        recentPosts.map((post) => (
+          <li class="mb-2">
+            <a
+              class:list={['post-link', { active: activeId === post.id }]}
+              data-bs-dismiss="offcanvas"
+              href={post.url}
+              title={post.title}
+            >
+              <div class="post-title">{post.title}</div>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  <!-- 標籤列表 -->
+  <div>
+    <h3 class="drawer-title">標籤</h3>
+    <ul class="list-unstyled">
+      {
+        tagCloud.map(({ count, tag }) => (
+          <li class="mb-2">
+            <a
+              class="tag-link"
+              data-bs-dismiss="offcanvas"
+              href={`/posts?tag=${encodeURIComponent(tag)}`}
+              title={`${tag} (${count})`}
+            >
+              <span class="tag-name">{tag}</span>
+              <span class="tag-count">{count}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</div>
+
+<script>
+  const offcanvasElement = document.getElementById('offcanvasNavbar');
+  const mainContainer = document.getElementById('main-menu-container');
+  const postsContainer = document.getElementById('posts-menu-container');
+  const backButton = document.getElementById('back-to-main-menu');
+
+  if (offcanvasElement && mainContainer && postsContainer && backButton) {
+    offcanvasElement.addEventListener('show.bs.offcanvas', () => {
+      // 開啟時預設顯示 posts 選單
+      postsContainer.classList.remove('d-none');
+      mainContainer.classList.add('d-none');
+    });
+
+    backButton.addEventListener('click', () => {
+      // 切換到主選單
+      postsContainer.classList.add('d-none');
+      mainContainer.classList.remove('d-none');
+    });
+  }
+</script>
+
+<style>
+  /* 抽屜樣式 */
+  .posts-drawer {
+    max-height: calc(100dvh - 200px);
+    overflow-y: auto;
+  }
+
+  /* 標題樣式 */
+  .drawer-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--bs-primary);
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--bs-primary);
+  }
+
+  /* 文章連結 */
+  .post-link {
+    display: block;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.25rem;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.2s;
+  }
+
+  .post-link:hover {
+    background-color: var(--bs-primary-bg-subtle);
+    color: var(--bs-primary);
+  }
+
+  .post-link.active {
+    background-color: rgb(var(--bs-primary-rgb), 0.15);
+    font-weight: 600;
+    color: var(--bs-primary);
+  }
+
+  .post-title {
+    font-size: 0.875rem;
+    line-height: 1.4;
+  }
+
+  /* 標籤連結 */
+  .tag-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.25rem;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.2s;
+  }
+
+  .tag-link:hover {
+    background-color: var(--bs-primary-bg-subtle);
+    color: var(--bs-primary);
+  }
+
+  .tag-name {
+    font-size: 0.875rem;
+  }
+
+  .tag-count {
+    font-size: 0.75rem;
+    padding: 0.125rem 0.5rem;
+    background-color: rgb(var(--bs-primary-rgb), 0.1);
+    color: var(--bs-primary);
+    border-radius: 1rem;
+  }
+
+  .tag-link:hover .tag-count {
+    background-color: var(--bs-primary);
+    color: white;
+  }
+</style>

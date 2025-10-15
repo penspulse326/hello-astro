@@ -3,7 +3,7 @@ import type { MarkdownHeading } from 'astro';
 
 interface Props {
   headings: MarkdownHeading[];
-  variant?: 'desktop' | 'mobile';
+  variant?: 'both' | 'desktop' | 'mobile';
 }
 
 const { headings, variant = 'both' } = Astro.props;
