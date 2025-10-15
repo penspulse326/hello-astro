@@ -1,7 +1,7 @@
 ---
 title: 'Day 24 - 強化體驗：更完整的聊天資訊'
 description: 'Cozy Chat 專案第 24 天：強化體驗：更完整的聊天資訊'
-date: '2023-10-24 00:00:00'
+date: '2025-09-25 00:00:00'
 keywords: ['Cozy Chat', '即時通訊', 'WebSocket', '專案實作']
 tags: ['Cozy Chat', '專案開發', '即時通訊']
 slug: 'cozy-chat-day24'

@@ -2,7 +2,13 @@
 import ArticleLayout from '../../layouts/article-layout.astro';
 import { getNavigation } from '../../utils/notes';
 
-const navigation = getNavigation();
+const notesNav = getNavigation();
+const navigation = notesNav.map((cat) => ({
+  id: cat.id,
+  items: cat.notes,
+  label: cat.label,
+  position: cat.position,
+}));
 ---
 
 <ArticleLayout navigation={navigation} showToc={false} title="研究筆記">

@@ -1,7 +1,7 @@
 ---
 title: 'Day 9 - 一家人就是要整整齊齊！用 pnpm 建置 monorepo'
 description: 'Cozy Chat 專案第 9 天：一家人就是要整整齊齊！用 pnpm 建置 monorepo'
-date: '2023-10-09 00:00:00'
+date: '2025-09-10 00:00:00'
 keywords: ['Cozy Chat', '即時通訊', 'WebSocket', '專案實作']
 tags: ['Cozy Chat', '專案開發', '即時通訊']
 slug: 'cozy-chat-day9'

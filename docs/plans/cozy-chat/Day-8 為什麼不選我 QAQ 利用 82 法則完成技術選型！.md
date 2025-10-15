@@ -1,7 +1,7 @@
 ---
 title: 'Day 8 - 為什麼不選我 QAQ 利用 82 法則完成技術選型！'
 description: 'Cozy Chat 專案第 8 天：為什麼不選我 QAQ 利用 82 法則完成技術選型！'
-date: '2023-10-08 00:00:00'
+date: '2025-09-09 00:00:00'
 keywords: ['Cozy Chat', '即時通訊', 'WebSocket', '專案實作']
 tags: ['Cozy Chat', '專案開發', '即時通訊']
 slug: 'cozy-chat-day8'

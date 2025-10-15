@@ -1,0 +1,147 @@
+---
+import type { CategoryContentItem, CategoryWithContent } from '../utils/content';
+
+interface Props {
+  aAttrs?: (item: CategoryContentItem) => Record<string, boolean | string | undefined>;
+  activeId?: string;
+  id: string;
+  navigation: CategoryWithContent[];
+}
+
+const { aAttrs, activeId, id, navigation } = Astro.props;
+
+const sanitizeId = (value: string) => value.replace(/[^a-zA-Z0-9_-]/g, '-');
+---
+
+<div class="accordion accordion-flush" id={id}>
+  {
+    navigation.map((category: CategoryWithContent) => {
+      const sectionId = `${id}-${sanitizeId(category.id)}`;
+      const collapseId = `${sectionId}-collapse`;
+      const headingId = `${sectionId}-heading`;
+      const isExpanded = category.items.some((item: CategoryContentItem) => item.id === activeId);
+
+      return (
+        <div class="accordion-item">
+          <h2 class="accordion-header" id={headingId}>
+            <button
+              aria-controls={collapseId}
+              aria-expanded={isExpanded}
+              class:list={{
+                'accordion-button': true,
+                collapsed: !isExpanded,
+              }}
+              data-bs-target={`#${collapseId}`}
+              data-bs-toggle="collapse"
+              type="button"
+            >
+              {category.label}
+            </button>
+          </h2>
+          <div
+            aria-labelledby={headingId}
+            class:list={{
+              'accordion-collapse collapse': true,
+              show: isExpanded,
+            }}
+            id={collapseId}
+          >
+            <div class="accordion-body">
+              <ul class="content-nav__list">
+                {category.items.map((item: CategoryContentItem) => (
+                  <li class="content-nav__item">
+                    <a
+                      class:list={['content-nav__link', { 'content-nav__link--active': item.id === activeId }]}
+                      href={item.url}
+                      {...(aAttrs?.(item) || {})}
+                    >
+                      {item.title}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      );
+    })
+  }
+</div>
+
+<style>
+  /* 手風琴基礎樣式 */
+  .accordion {
+    --bs-accordion-color: inherit;
+    --bs-accordion-bg: transparent;
+    --bs-accordion-border-color: transparent;
+  }
+
+  .accordion-item {
+    border: none;
+    border-radius: 0;
+    font-size: 0.9rem;
+  }
+
+  .accordion-button {
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    padding: 8px 0;
+    background-color: transparent;
+    box-shadow: none;
+    border: none;
+    border-bottom: 1px solid var(--bs-border-color);
+    border-radius: 0;
+    font-size: 0.9rem;
+  }
+
+  .accordion-button::after {
+    margin-left: auto;
+  }
+
+  .accordion-button:not(.collapsed) {
+    color: inherit;
+    background-color: transparent;
+  }
+
+  .accordion-body {
+    padding: 0.5rem 0 0;
+  }
+
+  /* 內容導覽列表樣式 */
+  .content-nav__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .content-nav__item {
+    border-radius: 0;
+  }
+
+  .content-nav__item:last-child {
+    border-bottom: none;
+    margin-bottom: 12px;
+  }
+
+  .content-nav__link {
+    display: flex;
+    flex-direction: column;
+    padding: 0.25rem 0.75rem;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .content-nav__link:hover {
+    background-color: var(--bs-primary-bg-subtle);
+    color: var(--bs-primary);
+  }
+
+  .content-nav__link--active {
+    font-weight: 600;
+    color: var(--bs-primary);
+    background-color: var(--bs-primary-bg-subtle);
+  }
+</style>

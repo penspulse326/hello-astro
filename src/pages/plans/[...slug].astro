@@ -1,0 +1,73 @@
+---
+import type { PlanEntry } from '../../utils/plans';
+
+import TableOfContents from '../../components/table-of-contents.astro';
+import ArticleLayout from '../../layouts/article-layout.astro';
+import { getAllPlans, getNavigation } from '../../utils/plans';
+
+export function getStaticPaths() {
+  const allPlans = getAllPlans();
+  return allPlans.map((plan) => ({
+    params: { slug: plan.id },
+    props: { plan },
+  }));
+}
+
+const { plan } = Astro.props as { plan: PlanEntry };
+
+if (!plan) {
+  // 靜態生成時不應該發生此情況
+  return Astro.redirect('/404');
+}
+
+const plansNav = getNavigation();
+const navigation = plansNav.map((cat) => ({
+  id: cat.id,
+  items: cat.plans,
+  label: cat.label,
+  position: cat.position,
+}));
+const activeId = plan.id;
+const pageTitle = `${plan.frontmatter.title} | 挑戰計畫`;
+const headings = await plan.getHeadings();
+---
+
+<ArticleLayout
+  activeId={activeId}
+  description={plan.frontmatter.description}
+  headings={headings}
+  navigation={navigation}
+  title={pageTitle}
+>
+  <article class="plans-article px-2 px-lg-4">
+    <header class="mb-4">
+      <h1 class="display-6 fw-bold mb-3">{plan.frontmatter.title}</h1>
+      <div class="d-flex flex-wrap align-items-center gap-3">
+        {
+          plan.frontmatter.date && (
+            <time class="plans-article__meta text-secondary" datetime={plan.frontmatter.date.toISOString()}>
+              {plan.frontmatter.date.toLocaleDateString('zh-TW')} 發布
+            </time>
+          )
+        }
+      </div>
+    </header>
+    <TableOfContents headings={headings} variant="mobile" />
+    <div class="markdown-body">
+      <plan.Content />
+    </div>
+  </article>
+</ArticleLayout>
+
+<style>
+  /* 計畫文章樣式 */
+  .plans-article {
+    background-color: var(--bs-body-bg);
+  }
+
+  /* 計畫文章 meta 資訊樣式 */
+  .plans-article__meta {
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+  }
+</style>

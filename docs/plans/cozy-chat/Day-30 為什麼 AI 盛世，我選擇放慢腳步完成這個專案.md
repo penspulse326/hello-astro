@@ -1,7 +1,7 @@
 ---
 title: 'Day 30 - 為什麼 AI 盛世，我選擇放慢腳步完成這個專案'
 description: 'Cozy Chat 專案第 30 天：為什麼 AI 盛世，我選擇放慢腳步完成這個專案'
-date: '2023-10-30 00:00:00'
+date: '2025-10-01 00:00:00'
 keywords: ['Cozy Chat', '即時通訊', 'WebSocket', '專案實作']
 tags: ['Cozy Chat', '專案開發', '即時通訊']
 slug: 'cozy-chat-day30'

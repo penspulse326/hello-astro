@@ -1,7 +1,7 @@
 ---
 title: 'Day 1 - 前言'
 description: '介紹 Cozy Chat 專案的背景與目標'
-date: 2023-10-01 00:00:00
+date: 2025-09-02 00:00:00
 keywords: [WebSocket, 聊天室, 即時通訊, 專案開發]
 tags: ['Cozy Chat', '專案規劃', '即時通訊']
 slug: cozy-chat-day1

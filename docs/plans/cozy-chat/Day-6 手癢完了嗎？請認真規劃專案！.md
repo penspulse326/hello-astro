@@ -1,7 +1,7 @@
 ---
 title: 'Day 6 - 手癢完了嗎？請認真規劃專案！'
 description: 'Cozy Chat 專案第 6 天：手癢完了嗎？請認真規劃專案！'
-date: '2023-10-06 00:00:00'
+date: '2025-09-07 00:00:00'
 keywords: ['Cozy Chat', '即時通訊', 'WebSocket', '專案實作']
 tags: ['Cozy Chat', '專案開發', '即時通訊']
 slug: 'cozy-chat-day6'

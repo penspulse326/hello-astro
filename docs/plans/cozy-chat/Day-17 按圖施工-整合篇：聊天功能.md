@@ -1,7 +1,7 @@
 ---
 title: 'Day 17 - 按圖施工-整合篇：聊天功能'
 description: 'Cozy Chat 專案第 17 天：按圖施工-整合篇：聊天功能'
-date: '2023-10-17 00:00:00'
+date: '2025-09-18 00:00:00'
 keywords: ['Cozy Chat', '即時通訊', 'WebSocket', '專案實作']
 tags: ['Cozy Chat', '專案開發', '即時通訊']
 slug: 'cozy-chat-day17'

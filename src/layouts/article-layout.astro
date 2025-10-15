@@ -1,22 +1,23 @@
 ---
 import type { MarkdownHeading } from 'astro';
 
-import type { CategoryWithNotes } from '../utils/notes';
+import type { CategoryWithContent } from '../utils/content';
 
-import NotesSidebar from '../components/sidebar.astro';
+import ContentSidebar from '../components/content-sidebar.astro';
 import TableOfContents from '../components/table-of-contents.astro';
 import Layout from './default-layout.astro';
 
 interface Props {
   activeId?: string;
+  ariaLabel?: string;
   description?: string;
   headings?: MarkdownHeading[];
-  navigation: CategoryWithNotes[];
+  navigation: CategoryWithContent[];
   showToc?: boolean;
   title: string;
 }
 
-const { activeId, description, headings = [], navigation, showToc = true, title } = Astro.props;
+const { activeId, ariaLabel, description, headings = [], navigation, showToc = true, title } = Astro.props;
 ---
 
 <Layout description={description} title={title}>
@@ -24,7 +25,7 @@ const { activeId, description, headings = [], navigation, showToc = true, title 
     <div class="d-flex">
       <!-- 側邊導覽 -->
       <div class="flex-shrink-0">
-        <NotesSidebar activeId={activeId} navigation={navigation} />
+        <ContentSidebar activeId={activeId} ariaLabel={ariaLabel} navigation={navigation} />
       </div>
 
       <!-- 內文 -->
@@ -35,7 +36,7 @@ const { activeId, description, headings = [], navigation, showToc = true, title 
       <!-- 目錄 -->
       {
         showToc && headings.length > 0 && (
-          <div class="d-none d-lg-block  flex-shrink-0" style={{ width: '200px' }}>
+          <div class="d-none d-lg-block flex-shrink-0" style={{ width: '200px' }}>
             <TableOfContents headings={headings} variant="desktop" />
           </div>
         )

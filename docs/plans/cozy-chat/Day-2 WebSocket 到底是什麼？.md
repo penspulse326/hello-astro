@@ -1,7 +1,7 @@
 ---
 title: 'Day 2 - WebSocket 到底是什麼？'
 description: '介紹 WebSocket 協定的基本概念與運作原理'
-date: 2023-10-02 00:00:00
+date: 2025-09-03 00:00:00
 keywords: [WebSocket, 網路協定, 即時通訊, 雙向通訊]
 tags: ['Cozy Chat', 'WebSocket', '網路基礎']
 slug: cozy-chat-day2

@@ -1,59 +1,21 @@
 ---
+// 此組件已棄用，請使用 ContentMenu
+// 保留此文件以維持向後兼容
 import type { CategoryWithNotes } from '../../utils/notes';
 
-import NotesNavigation from '../notes/notes-navigation.astro';
+import ContentMenu from './content-menu.astro';
 interface Props {
   activeNoteId?: string;
   notesNavigation: CategoryWithNotes[];
 }
 
 const { activeNoteId, notesNavigation } = Astro.props as Props;
+
+// 將 CategoryWithNotes 轉換為 CategoryWithContent 格式
+const convertedNavigation = notesNavigation.map((cat) => ({
+  ...cat,
+  items: cat.notes,
+}));
 ---
 
-<div id="notes-menu-container">
-  <button
-    class="btn btn-link text-decoration-none p-2 mb-3 fw-semibold w-100 text-start bg-body-secondary mt-n3 rounded-0"
-    id="back-to-main-menu"
-    type="button"
-  >
-    <i class="bi bi-arrow-left me-1"></i>
-    回到主選單
-  </button>
-  <div class="notes-drawer px-2">
-    <NotesNavigation
-      aAttrs={() => ({ 'data-bs-dismiss': 'offcanvas' })}
-      activeId={activeNoteId}
-      id="notes-drawer-accordion"
-      navigation={notesNavigation}
-    />
-  </div>
-</div>
-
-<script define:vars={{ activeNoteId }}>
-  const offcanvasElement = document.getElementById('offcanvasNavbar');
-  const mainContainer = document.getElementById('main-menu-container');
-  const notesContainer = document.getElementById('notes-menu-container');
-  const backButton = document.getElementById('back-to-main-menu');
-
-  if (offcanvasElement && mainContainer && notesContainer && backButton) {
-    offcanvasElement.addEventListener('show.bs.offcanvas', () => {
-      // 開啟時預設顯示筆記選單
-      notesContainer.classList.remove('d-none');
-      mainContainer.classList.add('d-none');
-    });
-
-    backButton.addEventListener('click', () => {
-      // 切換到主選單
-      notesContainer.classList.add('d-none');
-      mainContainer.classList.remove('d-none');
-    });
-  }
-</script>
-
-<style>
-  /* 筆記抽屜樣式 */
-  .notes-drawer {
-    max-height: calc(100dvh - 200px);
-    overflow-y: auto;
-  }
-</style>
+<ContentMenu activeId={activeNoteId} navigation={convertedNavigation} />

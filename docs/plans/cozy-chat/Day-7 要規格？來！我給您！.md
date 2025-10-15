@@ -1,7 +1,7 @@
 ---
 title: 'Day 7 - 要規格？來！我給您！'
 description: 'Cozy Chat 專案第 7 天：要規格？來！我給您！'
-date: '2023-10-07 00:00:00'
+date: 2025-09-08 00:00:00
 keywords: ['Cozy Chat', '即時通訊', 'WebSocket', '專案實作']
 tags: ['Cozy Chat', '專案開發', '即時通訊']
 slug: 'cozy-chat-day7'

@@ -1,7 +1,7 @@
 ---
 title: 'Day 28 - 期末回顧：建立自己的踩坑清單'
 description: 'Cozy Chat 專案第 28 天：期末回顧：建立自己的踩坑清單'
-date: '2023-10-28 00:00:00'
+date: '2025-09-29 00:00:00'
 keywords: ['Cozy Chat', '即時通訊', 'WebSocket', '專案實作']
 tags: ['Cozy Chat', '專案開發', '即時通訊']
 slug: 'cozy-chat-day28'

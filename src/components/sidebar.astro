@@ -1,43 +1,23 @@
 ---
+// 此組件已棄用，請使用 ContentSidebar
+// 保留此文件以維持向後兼容
 import type { CategoryWithNotes } from '../utils/notes';
 
-import NotesNavigation from './notes/notes-navigation.astro';
+import ContentSidebar from './content-sidebar.astro';
 
 interface Props {
   activeId?: string;
+  ariaLabel?: string;
   navigation: CategoryWithNotes[];
 }
 
-const { activeId, navigation } = Astro.props;
+const { activeId, ariaLabel = '研究筆記側邊導覽', navigation } = Astro.props;
+
+// 將 CategoryWithNotes 轉換為 CategoryWithContent 格式
+const convertedNavigation = navigation.map((cat) => ({
+  ...cat,
+  items: cat.notes,
+}));
 ---
 
-<aside class="d-none d-lg-block ps-1 pe-2 pt-1 mt-n1" style={{ width: '200px' }}>
-  <nav aria-label="研究筆記側邊導覽">
-    <NotesNavigation activeId={activeId} id="notes-sidebar-accordion" navigation={navigation} />
-  </nav>
-</aside>
-
-<style>
-  /* 側邊欄樣式 */
-  aside {
-    position: sticky;
-    top: 5rem;
-    max-height: calc(100dvh - 5rem);
-    height: 100%;
-    overflow: scroll;
-  }
-
-  /* 捲軸樣式 */
-  aside::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  aside::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  aside::-webkit-scrollbar-thumb {
-    background: rgb(var(--bs-primary-rgb), 0.4);
-    border-radius: 0;
-  }
-</style>
+<ContentSidebar activeId={activeId} ariaLabel={ariaLabel} navigation={convertedNavigation} />

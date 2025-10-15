@@ -1,0 +1,43 @@
+---
+import ArticleLayout from '../../layouts/article-layout.astro';
+import { getNavigation } from '../../utils/plans';
+
+const plansNav = getNavigation();
+const navigation = plansNav.map((cat) => ({
+  id: cat.id,
+  items: cat.plans,
+  label: cat.label,
+  position: cat.position,
+}));
+---
+
+<ArticleLayout navigation={navigation} showToc={false} title="挑戰計畫">
+  <section class="plans-intro px-2 px-lg-4 w-full">
+    <header class="mb-4">
+      <h1 class="display-6 fw-bold mb-3">挑戰計畫</h1>
+    </header>
+
+    <div class="card-body">
+      <p>
+        這裡記錄各種技術挑戰和專案計畫。
+        <br />
+        <br />
+        每個計畫都包含目標、進度和學習心得。
+      </p>
+
+      <ul>
+        <li>計畫目標</li>
+        <li>實作進度</li>
+        <li>技術難點</li>
+        <li>心得總結</li>
+      </ul>
+    </div>
+  </section>
+</ArticleLayout>
+
+<style>
+  /* 列表項目間距 */
+  li {
+    margin-bottom: 0.5rem;
+  }
+</style>

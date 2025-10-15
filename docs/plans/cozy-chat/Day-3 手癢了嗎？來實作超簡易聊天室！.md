@@ -1,7 +1,7 @@
 ---
 title: 'Day 3 - 手癢了嗎？來實作超簡易聊天室！'
 description: '使用 Express 和 WebSocket 實作一個簡單的聊天室應用'
-date: 2023-10-03 00:00:00
+date: 2025-09-04 00:00:00
 keywords: [Express, WebSocket, 聊天室, 即時通訊, 實作]
 tags: ['Cozy Chat', 'Express', 'WebSocket', '實作']
 slug: cozy-chat-day3

@@ -20,7 +20,13 @@ if (!note) {
   return Astro.redirect('/404');
 }
 
-const navigation = getNavigation();
+const notesNav = getNavigation();
+const navigation = notesNav.map((cat) => ({
+  id: cat.id,
+  items: cat.notes,
+  label: cat.label,
+  position: cat.position,
+}));
 const activeId = note.id;
 const pageTitle = `${note.frontmatter.title} | 研究筆記`;
 const headings = await note.getHeadings();

@@ -1,34 +1,58 @@
 ---
-import type { CategoryWithNotes } from '../../utils/notes';
+import type { CategoryWithContent } from '../../utils/content';
 
-import NotesMenu from './notes-menu.astro';
+import ContentMenu from './content-menu.astro';
 import ThemeToggler from './theme-toggler.astro';
 
 const pathname = Astro.url.pathname;
 const isNotesRoute = pathname.startsWith('/notes');
+const isPlansRoute = pathname.startsWith('/plans');
+const isContentRoute = isNotesRoute || isPlansRoute;
 
 const normalizePath = (path: string) => (path.endsWith('/') && path !== '/' ? path.slice(0, -1) : path);
 
-let notesNavigation: CategoryWithNotes[] = [];
-let activeNoteId: string | undefined;
+let contentNavigation: CategoryWithContent[] = [];
+let activeContentId: string | undefined;
 
 if (isNotesRoute) {
   const { getNavigation } = await import('../../utils/notes');
-  notesNavigation = getNavigation();
+  const notesNav = getNavigation();
+  contentNavigation = notesNav.map((cat) => ({ ...cat, items: cat.notes }));
 
   const currentPath = normalizePath(pathname);
 
-  for (const category of notesNavigation) {
-    for (const note of category.notes) {
-      const notePath = normalizePath(note.url);
+  for (const category of contentNavigation) {
+    for (const item of category.items) {
+      const itemPath = normalizePath(item.url);
 
-      if (notePath === currentPath) {
-        activeNoteId = note.id;
+      if (itemPath === currentPath) {
+        activeContentId = item.id;
         break;
       }
     }
 
-    if (activeNoteId) {
+    if (activeContentId) {
+      break;
+    }
+  }
+} else if (isPlansRoute) {
+  const { getNavigation } = await import('../../utils/plans');
+  const plansNav = getNavigation();
+  contentNavigation = plansNav.map((cat) => ({ ...cat, items: cat.plans }));
+
+  const currentPath = normalizePath(pathname);
+
+  for (const category of contentNavigation) {
+    for (const item of category.items) {
+      const itemPath = normalizePath(item.url);
+
+      if (itemPath === currentPath) {
+        activeContentId = item.id;
+        break;
+      }
+    }
+
+    if (activeContentId) {
       break;
     }
   }
@@ -231,7 +255,13 @@ if (isNotesRoute) {
           </div>
         </div>
 
-        {isNotesRoute && <NotesMenu {activeNoteId} {notesNavigation} />}
+        {
+          isContentRoute && (
+            <div id="content-menu-container">
+              <ContentMenu activeId={activeContentId} navigation={contentNavigation} />
+            </div>
+          )
+        }
       </div>
     </div>
   </div>
