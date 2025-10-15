@@ -1,0 +1,38 @@
+---
+interface Props {
+  Content: any;
+}
+
+const { Content } = Astro.props;
+---
+
+<div class="post-excerpt-wrapper">
+  <Content />
+</div>
+
+<script>
+  // 在客戶端處理截斷
+  document.addEventListener('DOMContentLoaded', () => {
+    const excerpts = document.querySelectorAll('.post-excerpt-wrapper');
+
+    excerpts.forEach((excerpt) => {
+      const walker = document.createTreeWalker(excerpt, NodeFilter.SHOW_COMMENT, null);
+
+      let comment;
+      while ((comment = walker.nextNode())) {
+        if (comment.textContent?.trim() === 'truncate') {
+          // 隱藏此註解之後的所有兄弟元素
+          let sibling = comment.nextSibling;
+          while (sibling) {
+            const next = sibling.nextSibling;
+            if (sibling.nodeType === Node.ELEMENT_NODE) {
+              (sibling as HTMLElement).style.display = 'none';
+            }
+            sibling = next;
+          }
+          break;
+        }
+      }
+    });
+  });
+</script>

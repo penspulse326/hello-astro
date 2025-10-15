@@ -1,0 +1,153 @@
+---
+import type { CategoryPostItem } from '../utils/posts';
+
+interface Props {
+  activeId?: string;
+  recentPosts: CategoryPostItem[];
+  tagCloud: Array<{ count: number; tag: string }>;
+}
+
+const { activeId, recentPosts, tagCloud } = Astro.props;
+
+// 格式化日期
+function formatDate(date?: Date): string {
+  if (!date) return '';
+  return new Intl.DateTimeFormat('zh-TW', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  }).format(date);
+}
+---
+
+<aside class="d-none d-lg-block ps-1 pe-2 pt-1 mt-n1" style={{ width: '200px' }}>
+  <!-- 近期文章 -->
+  <nav aria-label="近期文章" class="mb-4">
+    <h3 class="sidebar-title">近期文章</h3>
+    <ul class="list-unstyled">
+      {
+        recentPosts.map((post) => (
+          <li class="mb-2">
+            <a class:list={['post-link', { active: activeId === post.id }]} href={post.url} title={post.title}>
+              <div class="post-title">{post.title}</div>
+              {post.date && <div class="post-date text-muted">{formatDate(post.date)}</div>}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+
+  <!-- 標籤雲 -->
+  <nav aria-label="標籤雲">
+    <h3 class="sidebar-title">標籤</h3>
+    <div class="tag-cloud">
+      {
+        tagCloud.map(({ count, tag }) => (
+          <a class="tag-item" href={`/posts?tag=${encodeURIComponent(tag)}`} title={`${tag} (${count})`}>
+            {tag}
+            <span class="tag-count">{count}</span>
+          </a>
+        ))
+      }
+    </div>
+  </nav>
+</aside>
+
+<style>
+  /* 側邊欄樣式 */
+  aside {
+    position: sticky;
+    top: 5rem;
+    max-height: calc(100dvh - 5rem);
+    height: 100%;
+    overflow: scroll;
+  }
+
+  /* 捲軸樣式 */
+  aside::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  aside::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  aside::-webkit-scrollbar-thumb {
+    background: rgb(var(--bs-primary-rgb), 0.4);
+    border-radius: 0;
+  }
+
+  /* 側邊欄標題 */
+  .sidebar-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--bs-primary);
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--bs-primary);
+  }
+
+  /* 文章連結 */
+  .post-link {
+    display: block;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.2s;
+  }
+
+  .post-link:hover {
+    background-color: rgb(var(--bs-primary-rgb), 0.1);
+  }
+
+  .post-link.active {
+    background-color: rgb(var(--bs-primary-rgb), 0.15);
+    font-weight: 600;
+  }
+
+  .post-title {
+    font-size: 0.875rem;
+    line-height: 1.4;
+    margin-bottom: 0.25rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .post-date {
+    font-size: 0.75rem;
+  }
+
+  /* 標籤雲 */
+  .tag-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tag-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    background-color: rgb(var(--bs-primary-rgb), 0.1);
+    color: var(--bs-primary);
+    border-radius: 0.25rem;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .tag-item:hover {
+    background-color: var(--bs-primary);
+    color: white;
+  }
+
+  .tag-count {
+    font-size: 0.7rem;
+    opacity: 0.8;
+  }
+</style>

@@ -1,0 +1,184 @@
+---
+import PostExcerpt from '../../components/post-excerpt.astro';
+import PostsSidebar from '../../components/posts-sidebar.astro';
+import Layout from '../../layouts/default-layout.astro';
+import { getPostsSortedByDate, getRecentPosts, getTagCloud } from '../../utils/posts';
+
+// 取得所有文章
+const allPosts = getPostsSortedByDate();
+
+// 分頁設定
+const POSTS_PER_PAGE = 5;
+const currentPage = Number(Astro.url.searchParams.get('page')) || 1;
+const totalPages = Math.ceil(allPosts.length / POSTS_PER_PAGE);
+const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
+const endIndex = startIndex + POSTS_PER_PAGE;
+const posts = allPosts.slice(startIndex, endIndex);
+
+// 側邊欄資料
+const recentPosts = getRecentPosts(5);
+const tagCloud = getTagCloud();
+
+// 格式化日期
+function formatDate(date?: Date): string {
+  if (!date) return '';
+  return new Intl.DateTimeFormat('zh-TW', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  }).format(date);
+}
+---
+
+<Layout description="與職涯、工作、活動等相關的心得文章" title="心得文章">
+  <div class="container py-5">
+    <div class="d-flex">
+      <!-- 側邊欄 -->
+      <div class="flex-shrink-0">
+        <PostsSidebar recentPosts={recentPosts} tagCloud={tagCloud} />
+      </div>
+
+      <!-- 主要內容 -->
+      <div class="flex-grow-1" style={{ minWidth: 0 }}>
+        <div class="px-2 px-lg-4">
+          <!-- 文章列表 -->
+          <div class="posts-list">
+            {
+              posts.map((post) => {
+                const { Content } = post;
+
+                return (
+                  <article class="post-item card mb-4">
+                    <div class="card-body">
+                      <h2 class="card-title h4 mb-3">
+                        <a class="text-decoration-none" href={post.url}>
+                          {post.frontmatter.title}
+                        </a>
+                      </h2>
+
+                      {post.frontmatter.date && (
+                        <div class="post-meta text-muted mb-3">
+                          <small>
+                            <i class="bi bi-calendar3" /> {formatDate(post.frontmatter.date)}
+                            {post.frontmatter.tags && post.frontmatter.tags.length > 0 && (
+                              <span class="ms-3">
+                                <i class="bi bi-tags" />{' '}
+                                {post.frontmatter.tags.map((tag, index) => (
+                                  <>
+                                    <a
+                                      class="text-muted text-decoration-none"
+                                      href={`/posts?tag=${encodeURIComponent(tag)}`}
+                                    >
+                                      {tag}
+                                    </a>
+                                    {index < (post.frontmatter.tags?.length ?? 0) - 1 && ', '}
+                                  </>
+                                ))}
+                              </span>
+                            )}
+                          </small>
+                        </div>
+                      )}
+
+                      <div class="post-content mb-3">
+                        <PostExcerpt Content={Content} />
+                      </div>
+
+                      <a class="btn btn-outline-primary btn-sm" href={post.url}>
+                        閱讀更多 →
+                      </a>
+                    </div>
+                  </article>
+                );
+              })
+            }
+          </div>
+
+          <!-- 分頁 -->
+          {
+            totalPages > 1 && (
+              <nav aria-label="文章分頁">
+                <ul class="pagination justify-content-center">
+                  <li class:list={['page-item', { disabled: currentPage === 1 }]}>
+                    <a
+                      aria-label="上一頁"
+                      class="page-link"
+                      href={currentPage > 1 ? `/posts?page=${currentPage - 1}` : '#'}
+                    >
+                      <span aria-hidden="true">&laquo;</span>
+                    </a>
+                  </li>
+
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                    <li class:list={['page-item', { active: page === currentPage }]}>
+                      <a class="page-link" href={page === 1 ? '/posts' : `/posts?page=${page}`}>
+                        {page}
+                      </a>
+                    </li>
+                  ))}
+
+                  <li class:list={['page-item', { disabled: currentPage === totalPages }]}>
+                    <a
+                      aria-label="下一頁"
+                      class="page-link"
+                      href={currentPage < totalPages ? `/posts?page=${currentPage + 1}` : '#'}
+                    >
+                      <span aria-hidden="true">&raquo;</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            )
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  /* 文章項目樣式 */
+  .post-item {
+    transition: box-shadow 0.2s;
+  }
+
+  .post-item:hover {
+    box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%);
+  }
+
+  .post-item .card-title a {
+    color: inherit;
+    transition: color 0.2s;
+  }
+
+  .post-item .card-title a:hover {
+    color: var(--bs-primary);
+  }
+
+  /* 文章內容樣式 */
+  .post-content {
+    color: var(--bs-body-color);
+    line-height: 1.6;
+  }
+
+  .post-content :global(h2),
+  .post-content :global(h3) {
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .post-content :global(p) {
+    margin-bottom: 0.75rem;
+  }
+
+  .post-content :global(ul),
+  .post-content :global(ol) {
+    margin-bottom: 0.75rem;
+    padding-left: 1.5rem;
+  }
+
+  /* 分頁樣式 */
+  .pagination {
+    margin-top: 2rem;
+  }
+</style>
