@@ -56,7 +56,7 @@ const hasCustomSidebar = Astro.slots.has('sidebar');
   .content-sidebar {
     @media (width >= 992px) {
       position: sticky;
-      top: 60px;
+      top: calc(60px + 1.5rem);
       align-self: flex-start;
       max-height: calc(100dvh - 60px - 56px - 1.5rem);
       overflow: scroll;
@@ -80,7 +80,7 @@ const hasCustomSidebar = Astro.slots.has('sidebar');
   .content-toc {
     @media (width >= 992px) {
       position: sticky;
-      top: 60px;
+      top: calc(60px + 1.5rem);
       max-height: calc(100dvh - 60px - 56px - 1.5rem);
       align-self: flex-start;
       overflow-y: auto;
