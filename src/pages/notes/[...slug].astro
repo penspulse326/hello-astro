@@ -45,7 +45,7 @@ const headings = await note.getHeadings();
       <div class="d-flex flex-wrap align-items-center gap-3">
         {
           note.frontmatter.date && (
-            <time class="notes-article__meta text-secondary" datetime={note.frontmatter.date.toISOString()}>
+            <time class="notes-article__meta text-muted" datetime={note.frontmatter.date.toISOString()}>
               {note.frontmatter.date.toLocaleDateString('zh-TW')} 發布
             </time>
           )

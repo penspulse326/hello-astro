@@ -15,12 +15,13 @@ const showMobile = variant === 'mobile' || variant === 'both';
 ---
 
 {
-  tocHeadings.length > 0 && (
+  (
     <>
       {/* 桌面版目錄 - 固定在右側 */}
       {showDesktop && (
         <aside class="toc-desktop d-none d-lg-block">
           <nav aria-label="目錄">
+            <h2 class="toc-title">目錄</h2>
             <ul class="toc-list">
               {tocHeadings.map((heading) => (
                 <li class:list={['toc-item', `toc-item--depth-${heading.depth}`]}>

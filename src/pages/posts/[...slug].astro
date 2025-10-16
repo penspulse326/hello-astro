@@ -51,13 +51,7 @@ function formatDate(date?: Date): string {
       <h1 class="display-6 fw-bold mb-3">{post.frontmatter.title}</h1>
 
       <div class="post-meta text-muted mb-3 d-flex gap-3">
-        {
-          post.frontmatter.date && (
-            <div class="mb-2">
-              <i class="bi bi-calendar3" /> {formatDate(post.frontmatter.date)}
-            </div>
-          )
-        }
+        {post.frontmatter.date && <div class="mb-2">{formatDate(post.frontmatter.date)} 發布</div>}
         {
           post.frontmatter.tags && post.frontmatter.tags.length > 0 && (
             <div>
@@ -83,7 +77,7 @@ function formatDate(date?: Date): string {
     </div>
 
     <footer class="mt-5 pt-4 border-top">
-      <a class="btn btn-outline-primary" href="/posts"> ← 返回文章列表 </a>
+      <a class="btn btn-outline-dark" href="/posts"> ← 返回文章列表 </a>
     </footer>
   </article>
 </ArticleLayout>

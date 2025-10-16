@@ -36,7 +36,7 @@ const hasCustomSidebar = Astro.slots.has('sidebar');
       </div>
 
       <!-- 內文 -->
-      <div class="flex-grow-1 my-4" style={{ minWidth: 0 }}>
+      <div class="content-main flex-grow-1 mt-4" style={{ minWidth: 0 }}>
         <slot />
       </div>
 
@@ -74,6 +74,10 @@ const hasCustomSidebar = Astro.slots.has('sidebar');
       background: rgb(var(--bs-primary-rgb), 0.4);
       border-radius: 0;
     }
+  }
+
+  .content-main {
+    margin-bottom: 6rem;
   }
 
   .content-toc {

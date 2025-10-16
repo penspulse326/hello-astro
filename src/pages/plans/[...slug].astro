@@ -45,7 +45,7 @@ const headings = await plan.getHeadings();
       <div class="d-flex flex-wrap align-items-center gap-3">
         {
           plan.frontmatter.date && (
-            <time class="plans-article__meta text-secondary" datetime={plan.frontmatter.date.toISOString()}>
+            <time class="plans-article__meta text-muted" datetime={plan.frontmatter.date.toISOString()}>
               {plan.frontmatter.date.toLocaleDateString('zh-TW')} 發布
             </time>
           )
