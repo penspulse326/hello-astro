@@ -1,4 +1,5 @@
 ---
+import StarfieldCanvas from '../components/StarfieldCanvas.astro';
 import Layout from '../layouts/default-layout.astro';
 ---
 
@@ -8,9 +9,10 @@ import Layout from '../layouts/default-layout.astro';
     aria-labelledby="site-title-heading"
     class="hero-section d-flex align-items-center justify-content-center text-white"
   >
+    <StarfieldCanvas />
     <h1 class="text-center" id="site-title-heading">
       Pen's Pulse <br />
-      技術筆記與開發心得
+      各種筆記與開發心得
     </h1>
   </section>
 
@@ -117,6 +119,7 @@ import Layout from '../layouts/default-layout.astro';
   <style>
     /* 主視覺區樣式 */
     .hero-section {
+      position: relative;
       height: 300px;
       background: linear-gradient(to bottom, var(--bs-primary) 0%, #0861c5 100%);
     }
